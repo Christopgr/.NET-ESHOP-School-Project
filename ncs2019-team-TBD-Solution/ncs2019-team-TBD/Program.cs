@@ -13,7 +13,7 @@ namespace ncs2019_team_TBD
     public class Program
     {
         /// <summary>
-        /// 
+        /// sadadsads
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
