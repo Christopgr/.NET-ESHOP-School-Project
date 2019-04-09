@@ -9,6 +9,8 @@ namespace ncs2019_team_TBD.Models
     {
         public int Id { get; set; }
 
+        public int CategoryId { get; set; }
+
         public string Description { get; set; }
 
         public int InventoryQuantity { get; set; }
@@ -20,5 +22,11 @@ namespace ncs2019_team_TBD.Models
         public int SerialNumber { get; set; }
 
         public int Price { get; set; }
-    }
+
+		public virtual Category Category { get; set; }
+
+		public IEnumerable<ProductMaterial> ProductMaterials { get; internal set; }
+
+		public IEnumerable<OrderProduct> OrderProducts { get; internal set; }
+	}
 }

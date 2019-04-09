@@ -19,9 +19,55 @@ namespace ncs2019_team_TBD.Data
 
         public DbSet<Material> Materials { get; set; }
 
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<ProductMaterial> ProductMaterials { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-    }
+
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			base.OnModelCreating(builder);
+
+			builder.Entity<Product>(entity => {
+				entity.ToTable("Products");
+				entity.HasKey(x => x.Id);
+				entity.HasOne(x => x.Category).WithMany(c => c.Products).HasForeignKey(f => f.CategoryId);
+				entity.HasMany(x => x.ProductMaterials);
+				entity.HasMany(x => x.OrderProducts);
+			});
+
+			builder.Entity<Category>(entity => {
+				entity.ToTable("Categories");
+				entity.HasKey(x => x.Id);
+				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
+			});
+
+			builder.Entity<Material>(entity => {
+				entity.ToTable("Materials");
+				entity.HasKey(x => x.Id);
+				entity.HasMany(x => x.ProductMaterials);
+			});
+
+			builder.Entity<Order>(entity => {
+				entity.ToTable("Orders");
+				entity.HasKey(x => x.Id);
+				entity.HasOne(x => x.User).WithMany(c => c.Orders).HasForeignKey(f => f.UserId);
+				entity.HasMany(x => x.OrderProducts);
+			});
+
+			builder.Entity<ProductMaterial>(entity => {
+				entity.ToTable("ProductMaterials");
+				entity.HasKey(x => new { x.ProductId, x.MaterialId });
+			});
+			
+			builder.Entity<OrderProduct>(entity => {
+				entity.ToTable("OrderProducts");
+				entity.HasKey(x => new { x.ProductId, x.OrderId });
+			});
+		}
+	}
 }

@@ -10,5 +10,7 @@ namespace ncs2019_team_TBD.Models
 		public int Id { get; set; }
 
 		public string Name { get; set; }
+
+		public IEnumerable<ProductMaterial> ProductMaterials { get; internal set; }
 	}
 }
