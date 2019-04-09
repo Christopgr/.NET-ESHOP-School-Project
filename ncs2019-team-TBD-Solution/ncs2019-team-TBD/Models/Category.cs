@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ncs2019_team_TBD.Models
 {
-	public class Material
+	public class Category
 	{
 		public int Id { set; get; }
 
