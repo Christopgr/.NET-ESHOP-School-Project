@@ -7,14 +7,14 @@ namespace ncs2019_team_TBD.Models
 {
     public class Order {
 		
-		public int Id { set; get; }
+		public int Id { get; set; }
 
-		public int CustomerId { set; get; }
+		public int CustomerId { get; set; }
 
-		public int Quantity { set; get; }
+		public int Quantity { get; set; }
 
-		public DateTime DateCreated { set; get; }
+		public DateTime DateCreated { get; set; }
 
-		public string State { set; get; }
+		public string State { get; set; }
 	}
 }

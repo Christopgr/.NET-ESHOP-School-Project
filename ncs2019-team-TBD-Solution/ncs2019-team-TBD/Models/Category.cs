@@ -7,7 +7,7 @@ namespace ncs2019_team_TBD.Models
 {
 	public class Category
 	{
-		public int Id { set; get; }
+		public int Id { get; set; }
 
 		public string Name { get; set; }
 	}
