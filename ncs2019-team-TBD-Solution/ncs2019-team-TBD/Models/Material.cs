@@ -11,6 +11,10 @@ namespace ncs2019_team_TBD.Models
 
 		public string Name { get; set; }
 
+		/// <summary>
+		/// declares that a material can have many product materials
+		/// a material can be in many ProductMaterials
+		/// </summary>
 		public IEnumerable<ProductMaterial> ProductMaterials { get; internal set; }
 	}
 }

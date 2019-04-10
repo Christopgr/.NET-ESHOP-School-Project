@@ -23,8 +23,14 @@ namespace ncs2019_team_TBD.Models
 
         public int Price { get; set; }
 
+		/// <summary>
+		/// only 1 Category
+		/// </summary>
 		public virtual Category Category { get; set; }
 
+		/// <summary>
+		/// but many ProductMaterials and OrderProducts
+		/// </summary>
 		public IEnumerable<ProductMaterial> ProductMaterials { get; internal set; }
 
 		public IEnumerable<OrderProduct> OrderProducts { get; internal set; }

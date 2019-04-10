@@ -14,6 +14,10 @@ namespace ncs2019_team_TBD.Models
 
 		public DateTime DateCreated { get; set; }
 
+		/// <summary>
+		/// declares that a category can have many products
+		/// a category can have many products
+		/// </summary>
 		public IEnumerable<Product> Products { get; set; }
 	}
 }

@@ -33,6 +33,9 @@ namespace ncs2019_team_TBD.Models
 
 		public Boolean ActiveOrder { get; set; }
 
+		/// <summary>
+		/// a user can have many orders
+		/// </summary>
 		public IEnumerable<Order> Orders { get; set; }
 	}
 }
