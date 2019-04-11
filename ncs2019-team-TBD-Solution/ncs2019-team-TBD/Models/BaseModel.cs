@@ -22,6 +22,9 @@ namespace ncs2019_team_TBD.Models
 			get;
 			set;
 		}
+        /// <summary>
+        /// 
+        /// </summary>
 
 		public DateTime DateUpdated {
 			get;
