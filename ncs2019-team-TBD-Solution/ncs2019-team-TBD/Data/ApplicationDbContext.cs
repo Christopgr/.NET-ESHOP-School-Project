@@ -41,6 +41,7 @@ namespace ncs2019_team_TBD.Data
 				//declare that Product can be in many ProductMaterials
 				entity.HasMany(x => x.ProductMaterials);
 				entity.HasMany(x => x.OrderProducts);
+				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
 			});
 
 			builder.Entity<Category>(entity => {
@@ -53,12 +54,14 @@ namespace ncs2019_team_TBD.Data
 				entity.ToTable("Materials");
 				entity.HasKey(x => x.Id);
 				entity.HasMany(x => x.ProductMaterials);
+				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
 			});
 
 			builder.Entity<Order>(entity => {
 				entity.ToTable("Orders");
 				entity.HasKey(x => x.Id);
 				entity.HasOne(x => x.User).WithMany(c => c.Orders).HasForeignKey(f => f.UserId);
+				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
 				entity.HasMany(x => x.OrderProducts);
 			});
 

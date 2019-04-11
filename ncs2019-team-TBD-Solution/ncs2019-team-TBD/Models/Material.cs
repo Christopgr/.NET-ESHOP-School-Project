@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace ncs2019_team_TBD.Models
 {
-	public class Material
+	public class Material : BaseModel
 	{
-		public int Id { get; set; }
-
-		public string Name { get; set; }
-
 		/// <summary>
 		/// declares that a material can have many product materials
 		/// a material can be in many ProductMaterials

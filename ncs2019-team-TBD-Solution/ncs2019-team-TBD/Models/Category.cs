@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace ncs2019_team_TBD.Models
 {
-	public class Category
+	public class Category : BaseModel
 	{
-		public int Id { get; set; }
-
-		public string Name { get; set; }
-
-		public DateTime DateCreated { get; set; }
-
 		/// <summary>
 		/// declares that a category can have many products
 		/// a category can have many products

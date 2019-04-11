@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ncs2019_team_TBD.Data;
 
-namespace ncs2019_team_TBD.Data.Migrations
+namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190411150311_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,9 +194,15 @@ namespace ncs2019_team_TBD.Data.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 9, 17, 12, 21, 698, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 11, 15, 3, 10, 898, DateTimeKind.Utc));
+
+                    b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
+
+                    b.Property<Guid>("UserCreated");
+
+                    b.Property<Guid>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -207,7 +215,17 @@ namespace ncs2019_team_TBD.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2019, 4, 11, 15, 3, 10, 900, DateTimeKind.Utc));
+
+                    b.Property<DateTime>("DateUpdated");
+
                     b.Property<string>("Name");
+
+                    b.Property<Guid>("UserCreated");
+
+                    b.Property<Guid>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -220,13 +238,23 @@ namespace ncs2019_team_TBD.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2019, 4, 11, 15, 3, 10, 902, DateTimeKind.Utc));
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("Name");
 
                     b.Property<int>("Quantity");
 
                     b.Property<string>("State");
 
+                    b.Property<Guid>("UserCreated");
+
                     b.Property<int>("UserId");
+
+                    b.Property<Guid>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -256,7 +284,9 @@ namespace ncs2019_team_TBD.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2019, 4, 11, 15, 3, 10, 897, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -264,9 +294,15 @@ namespace ncs2019_team_TBD.Data.Migrations
 
                     b.Property<int>("InventoryQuantity");
 
+                    b.Property<string>("Name");
+
                     b.Property<int>("Price");
 
                     b.Property<int>("SerialNumber");
+
+                    b.Property<Guid>("UserCreated");
+
+                    b.Property<Guid>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -306,6 +342,8 @@ namespace ncs2019_team_TBD.Data.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
+                    b.Property<DateTime>("DateUpdated");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
@@ -317,6 +355,10 @@ namespace ncs2019_team_TBD.Data.Migrations
                     b.Property<string>("Surname");
 
                     b.Property<double>("TotalPurchase");
+
+                    b.Property<Guid>("UserCreated");
+
+                    b.Property<Guid>("UserUpdated");
 
                     b.Property<int>("ZipCode");
 
