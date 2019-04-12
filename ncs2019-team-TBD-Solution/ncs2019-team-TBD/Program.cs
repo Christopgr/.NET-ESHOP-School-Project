@@ -20,7 +20,11 @@ namespace ncs2019_team_TBD
         {
             CreateWebHostBuilder(args).Build().Run();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
