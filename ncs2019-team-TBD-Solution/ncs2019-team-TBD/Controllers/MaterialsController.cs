@@ -54,8 +54,8 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Material material)
-        {
+        public async Task<IActionResult> Create([Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+		{
             if (ModelState.IsValid)
             {
                 _context.Add(material);
@@ -86,8 +86,8 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Material material)
-        {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+		{
             if (id != material.Id)
             {
                 return NotFound();
