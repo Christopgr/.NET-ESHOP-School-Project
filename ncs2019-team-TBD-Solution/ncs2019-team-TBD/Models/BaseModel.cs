@@ -8,35 +8,17 @@ namespace ncs2019_team_TBD.Models
 {
 	public class BaseModel
 	{
-		public int Id {
-			get;
-			set;
-		}
+		public int Id {	get; set;}
 
-		public string Name {
-			get;
-			set;
-		}
+		public string Name { get; set; }
 
-		public DateTime DateCreated {
-			get;
-			set;
-		}
+		public DateTime DateCreated { get; set; }
 
-		public DateTime DateUpdated {
-			get;
-			set;
-		}
+		public DateTime DateUpdated { get; set; }
 
-		public Guid UserCreated {
-			get;
-			set;
-		}
+		public Guid UserCreated { get; set; }
 
-		public Guid UserUpdated {
-			get;
-			set;
-		}
+		public Guid UserUpdated { get; set; }
 
 	}
 }
