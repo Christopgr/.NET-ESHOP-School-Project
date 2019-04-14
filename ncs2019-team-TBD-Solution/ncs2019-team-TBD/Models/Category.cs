@@ -12,6 +12,6 @@ namespace ncs2019_team_TBD.Models
 		/// declares that a category can have many products
 		/// a category can have many products
 		/// </summary>
-		public IEnumerable<Product> Products { get; set; }
+		public ICollection<Product> Products { get; set; }
 	}
 }

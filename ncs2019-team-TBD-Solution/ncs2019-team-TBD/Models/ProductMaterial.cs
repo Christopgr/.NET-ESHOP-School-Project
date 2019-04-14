@@ -14,7 +14,5 @@ namespace ncs2019_team_TBD.Models
 		public int ProductId { get; set; }
 
 		public int MaterialId { get; set; }
-
-		public double Percentage { get; set; }
 	}
 }
