@@ -24,6 +24,6 @@ namespace ncs2019_team_TBD.Models
 		/// declares that an order can have many orderproduct 
 		/// an order can be in many OrderProducts
 		/// </summary>
-		public IEnumerable<OrderProduct> OrderProducts { get; internal set; }
+		public IEnumerable<OrderProduct> OrderProducts { get; set; }
 	}
 }

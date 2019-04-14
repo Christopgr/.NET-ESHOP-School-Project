@@ -16,7 +16,7 @@ namespace ncs2019_team_TBD.Models
     
         public int SerialNumber { get; set; }
 
-        public int Price { get; set; }
+        public double Price { get; set; }
 
 		/// <summary>
 		/// only 1 Category
@@ -26,8 +26,8 @@ namespace ncs2019_team_TBD.Models
 		/// <summary>
 		/// but many ProductMaterials and OrderProducts
 		/// </summary>
-		public IEnumerable<ProductMaterial> ProductMaterials { get; internal set; }
+		public IEnumerable<ProductMaterial> ProductMaterials { get; set; }
 
-		public IEnumerable<OrderProduct> OrderProducts { get; internal set; }
+		public IEnumerable<OrderProduct> OrderProducts { get; set; }
 	}
 }
