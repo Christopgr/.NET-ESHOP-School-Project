@@ -86,7 +86,7 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateUpdated")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
 		{
             if (id != material.Id)
             {
@@ -97,6 +97,7 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
+					material.DateUpdated = DateTime.UtcNow;
                     _context.Update(material);
                     await _context.SaveChangesAsync();
                 }
