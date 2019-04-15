@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ncs2019_team_TBD.Data;
 using ncs2019_team_TBD.Models;
+using System.Diagnostics;
 
 namespace ncs2019_team_TBD.Controllers
 {
@@ -58,10 +59,19 @@ namespace ncs2019_team_TBD.Controllers
 		{
             if (ModelState.IsValid)
             {
-                _context.Add(material);
+
+				material.DateCreated = DateTime.UtcNow;
+				material.DateUpdated = DateTime.UtcNow;
+
+				//material.UserCreated
+				//material.UserUpdated
+
+				_context.Add(material);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+
             return View(material);
         }
 
@@ -78,7 +88,8 @@ namespace ncs2019_team_TBD.Controllers
             {
                 return NotFound();
             }
-            return View(material);
+
+			return View(material);
         }
 
         // POST: Materials/Edit/5
@@ -86,9 +97,16 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateUpdated")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
 		{
-            if (id != material.Id)
+			if (id != material.Id)
+			{
+				return NotFound();
+			}
+
+			var existing = await _context.Materials.FindAsync(id);
+
+			if (existing == null)
             {
                 return NotFound();
             }
@@ -97,13 +115,18 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
-					material.DateUpdated = DateTime.UtcNow;
-                    _context.Update(material);
+					existing.DateUpdated = DateTime.UtcNow;
+					existing.Name = material.Name;
+					
+					//oti den exei parei apo to Bind
+					//existing.UserUpdated = material.UserUpdated
+
+                    _context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaterialExists(material.Id))
+                    if (!MaterialExists(existing.Id))
                     {
                         return NotFound();
                     }
@@ -112,9 +135,9 @@ namespace ncs2019_team_TBD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit));
             }
-            return View(material);
+            return View(existing);
         }
 
         // GET: Materials/Delete/5
