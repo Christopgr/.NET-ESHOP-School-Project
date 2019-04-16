@@ -10,23 +10,23 @@ using ncs2019_team_TBD.Models;
 
 namespace ncs2019_team_TBD.Controllers
 {
-    public class CategoriesController : Controller
+    public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var categories = await _context.Categories.Include(p => p.Products).ToListAsync();
-            return View(categories);
+            var applicationDbContext = _context.Orders.Include(o => o.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +34,47 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var order = await _context.Orders
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(order);
         }
 
-        // GET: Categories/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Category category)
+        public async Task<IActionResult> Create([Bind("UserId,Quantity,State,Id,Name")] Order order)
         {
             if (ModelState.IsValid)
             {
-                category.DateCreated=DateTime.UtcNow;
-                category.DateUpdated = DateTime.UtcNow;
-                
+                order.DateCreated = DateTime.UtcNow;
+                order.DateUpdated = DateTime.UtcNow;
+                order.UserCreated = Guid.NewGuid();
+                order.UserUpdated = Guid.NewGuid();
 
-                _context.Add(category);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", order.UserId);
+            return View(order);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +82,30 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            return View(category);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
+            return View(order);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Quantity,State,Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Order order)
         {
-            if (id != category.Id)
+            if (id != order.Id)
+            {
+                return NotFound();
+            }
+
+            var existing = await _context.Orders.FindAsync(id);
+
+            if (existing==null)
             {
                 return NotFound();
             }
@@ -102,14 +114,13 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
-                    
-                    _context.Update(category);
-                    category.DateUpdated = DateTime.UtcNow;
+                    _context.Update(order);
+                    order.DateUpdated = DateTime.UtcNow;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!OrderExists(order.Id))
                     {
                         return NotFound();
                     }
@@ -120,10 +131,11 @@ namespace ncs2019_team_TBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", order.UserId);
+            return View(order);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,30 +143,31 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var order = await _context.Orders
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(order);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
+            var order = await _context.Orders.FindAsync(id);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }

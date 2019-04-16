@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ncs2019_team_TBD.Data;
 
 namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190415145321_sad")]
+    partial class sad
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,7 +194,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 55, 26, 533, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 53, 21, 603, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -215,7 +217,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 55, 26, 535, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 53, 21, 605, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -238,7 +240,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 55, 26, 538, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 53, 21, 610, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -284,7 +286,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 55, 26, 532, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 14, 53, 21, 602, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
