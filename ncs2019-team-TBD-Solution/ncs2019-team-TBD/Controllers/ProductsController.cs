@@ -56,16 +56,21 @@ namespace ncs2019_team_TBD.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,Description,InventoryQuantity,SerialNumber,Price,Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Product product)
+        [ValidateAntiForgeryToken]                    
+        public async Task<IActionResult> Create([Bind("CategoryId,Description,InventoryQuantity,SerialNumber,Price,Id,Name")] Product product)
         {
             if (ModelState.IsValid)
             {
+                product.DateCreated = DateTime.UtcNow;
+                product.DateUpdated = DateTime.UtcNow;
+                //product.UserCreated = Guid.NewGuid();
+               // product.UserUpdated = Guid.NewGuid();
+
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -82,7 +87,7 @@ namespace ncs2019_team_TBD.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -90,8 +95,8 @@ namespace ncs2019_team_TBD.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Description,InventoryQuantity,SerialNumber,Price,Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Product product)
+        [ValidateAntiForgeryToken]                        
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Description,InventoryQuantity,SerialNumber,Price,Id,Name")] Product product)
         {
             if (id != product.Id)
             {
@@ -118,7 +123,7 @@ namespace ncs2019_team_TBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
 
