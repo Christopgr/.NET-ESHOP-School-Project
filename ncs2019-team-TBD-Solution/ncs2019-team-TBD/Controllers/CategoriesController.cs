@@ -55,11 +55,11 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
         {
             if (ModelState.IsValid)
             {
-                category.DateCreated=DateTime.UtcNow;
+				category.DateCreated = DateTime.UtcNow;
                 category.DateUpdated = DateTime.UtcNow;
 
                 _context.Add(category);
@@ -78,6 +78,7 @@ namespace ncs2019_team_TBD.Controllers
             }
 
             var category = await _context.Categories.FindAsync(id);
+
             if (category == null)
             {
                 return NotFound();
@@ -90,24 +91,31 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
         {
             if (id != category.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+			var existing = await _context.Categories.FindAsync(id);
+
+			if (existing == null) {
+				return NotFound();
+			}
+
+			if (ModelState.IsValid)
             {
                 try
                 {
-                    category.DateUpdated = DateTime.UtcNow;
-                    _context.Update(category);
+					existing.DateUpdated = DateTime.UtcNow;
+					existing.Name = category.Name;
+                    _context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!CategoryExists(existing.Id))
                     {
                         return NotFound();
                     }
@@ -118,7 +126,7 @@ namespace ncs2019_team_TBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(existing);
         }
 
         // GET: Categories/Delete/5
