@@ -77,6 +77,7 @@ namespace ncs2019_team_TBD.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -103,16 +104,29 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
+            var existing = await _context.Products.FindAsync(id);
+
+            if (existing == null)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(product);
+                    existing.CategoryId = product.CategoryId;
+                    existing.Description = product.Description;
+                    existing.InventoryQuantity = product.InventoryQuantity;
+                    existing.SerialNumber = product.SerialNumber;
+                    existing.Price = product.Price;
+                    existing.Id = product.Id;
+                    existing.Name = product.Name;
+                    _context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!ProductExists(existing.Id))
                     {
                         return NotFound();
                     }
@@ -123,7 +137,7 @@ namespace ncs2019_team_TBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", existing.CategoryId);
             return View(product);
         }
 
