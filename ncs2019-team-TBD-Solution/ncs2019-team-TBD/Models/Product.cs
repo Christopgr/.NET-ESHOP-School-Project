@@ -26,8 +26,8 @@ namespace ncs2019_team_TBD.Models
 		/// <summary>
 		/// but many ProductMaterials and OrderProducts
 		/// </summary>
-		public IEnumerable<ProductMaterial> ProductMaterials { get; set; }
+		public ICollection<ProductMaterial> ProductMaterials { get; set; }
 
-		public IEnumerable<OrderProduct> OrderProducts { get; set; }
+		public ICollection<OrderProduct> OrderProducts { get; set; }
 	}
 }

@@ -11,6 +11,6 @@ namespace ncs2019_team_TBD.Models
 		/// declares that a material can have many product materials
 		/// a material can be in many ProductMaterials
 		/// </summary>
-		public IEnumerable<ProductMaterial> ProductMaterials { get; set; }
+		public ICollection<ProductMaterial> ProductMaterials { get; set; }
 	}
 }
