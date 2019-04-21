@@ -15,4 +15,10 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Shared\_Layout_Eshop.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

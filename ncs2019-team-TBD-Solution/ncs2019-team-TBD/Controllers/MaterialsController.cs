@@ -7,26 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ncs2019_team_TBD.Data;
 using ncs2019_team_TBD.Models;
+using System.Diagnostics;
 
 namespace ncs2019_team_TBD.Controllers
 {
-    public class CategoriesController : Controller
+    public class MaterialsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public MaterialsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: Materials
         public async Task<IActionResult> Index()
         {
-            var categories = await _context.Categories.Include(p => p.Products).ToListAsync();
-            return View(categories);
+            return View(await _context.Materials.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        // GET: Materials/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,48 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var material = await _context.Materials
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (material == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(material);
         }
 
-        // GET: Categories/Create
+        // GET: Materials/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Materials/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
-        {
+        public async Task<IActionResult> Create([Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+		{
             if (ModelState.IsValid)
             {
-				category.DateCreated = DateTime.UtcNow;
-                category.DateUpdated = DateTime.UtcNow;
 
-                _context.Add(category);
+				material.DateCreated = DateTime.UtcNow;
+				material.DateUpdated = DateTime.UtcNow;
+
+				//material.UserCreated
+				//material.UserUpdated
+
+				_context.Add(material);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+
+
+            return View(material);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Materials/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,45 +83,50 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-
-            if (category == null)
+            var material = await _context.Materials.FindAsync(id);
+            if (material == null)
             {
                 return NotFound();
             }
-            return View(category);
+
+			return View(material);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Materials/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
-        {
-            if (id != category.Id)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+		{
+			if (id != material.Id)
+			{
+				return NotFound();
+			}
+
+			var existing = await _context.Materials.FindAsync(id);
+
+			if (existing == null)
             {
                 return NotFound();
             }
 
-			var existing = await _context.Categories.FindAsync(id);
-
-			if (existing == null) {
-				return NotFound();
-			}
-
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
 					existing.DateUpdated = DateTime.UtcNow;
-					existing.Name = category.Name;
+					existing.Name = material.Name;
+					
+					//oti den exei parei apo to Bind
+					//existing.UserUpdated = material.UserUpdated
+
                     _context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(existing.Id))
+                    if (!MaterialExists(existing.Id))
                     {
                         return NotFound();
                     }
@@ -124,12 +135,12 @@ namespace ncs2019_team_TBD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit));
             }
             return View(existing);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Materials/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,30 +148,30 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var material = await _context.Materials
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (material == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(material);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Materials/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
+            var material = await _context.Materials.FindAsync(id);
+            _context.Materials.Remove(material);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool MaterialExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return _context.Materials.Any(e => e.Id == id);
         }
     }
 }

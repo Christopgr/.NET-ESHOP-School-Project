@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ncs2019_team_TBD.Data;
 
 namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190415055429_sec")]
+    partial class sec
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,6 +186,33 @@ namespace ncs2019_team_TBD.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ncs2019_team_TBD.Models.Attachment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<Guid>("UserCreated");
+
+                    b.Property<Guid>("UserUpdated");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Attachment");
+                });
+
             modelBuilder.Entity("ncs2019_team_TBD.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -192,7 +221,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 6, 55, 38, 211, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 5, 54, 29, 718, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -215,7 +244,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 6, 55, 38, 213, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 5, 54, 29, 720, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -238,7 +267,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 6, 55, 38, 215, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 5, 54, 29, 723, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -284,7 +313,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 15, 6, 55, 38, 210, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 15, 5, 54, 29, 717, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -405,6 +434,14 @@ namespace ncs2019_team_TBD.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ncs2019_team_TBD.Models.Attachment", b =>
+                {
+                    b.HasOne("ncs2019_team_TBD.Models.Product", "Product")
+                        .WithMany("Attachments")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

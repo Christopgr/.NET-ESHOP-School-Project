@@ -1,0 +1,66 @@
+﻿@model ncs2019_team_TBD.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InventoryQuantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InventoryQuantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SerialNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUpdated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateUpdated)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
