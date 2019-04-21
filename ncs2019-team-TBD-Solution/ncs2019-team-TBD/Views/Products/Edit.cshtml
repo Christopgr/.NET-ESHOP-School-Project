@@ -1,4 +1,4 @@
-﻿@model ncs2019_team_TBD.Models.Product
+﻿@model ncs2019_team_TBD.Controllers.Modelo
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,35 +13,51 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                <label asp-for="Product.CategoryId" class="control-label"></label>
+                <select asp-for="Product.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+            <div>
+                <ul>
+                    @foreach (SelectListItem m in ViewBag.MaterialId)
+                    {
+                    <li>
+                        <input type="checkbox" name="SelectedMaterials" value="@m.Value"
+                        @if (Model.SelectedMaterials.Contains(m.Value))
+                        {
+                            <text> checked </text>
+                        }
+                        /> 
+                        <label>@m.Text</label>
+                    </li>
+                    }
+                </ul>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Product.Description" class="control-label"></label>
+                <input asp-for="Product.Description" class="form-control" />
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InventoryQuantity" class="control-label"></label>
-                <input asp-for="InventoryQuantity" class="form-control" />
-                <span asp-validation-for="InventoryQuantity" class="text-danger"></span>
+                <label asp-for="Product.InventoryQuantity" class="control-label"></label>
+                <input asp-for="Product.InventoryQuantity" class="form-control" />
+                <span asp-validation-for="Product.InventoryQuantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SerialNumber" class="control-label"></label>
-                <input asp-for="SerialNumber" class="form-control" />
-                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                <label asp-for="Product.SerialNumber" class="control-label"></label>
+                <input asp-for="Product.SerialNumber" class="form-control" />
+                <span asp-validation-for="Product.SerialNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Product.Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Product.Name" class="control-label"></label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

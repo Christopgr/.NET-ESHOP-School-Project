@@ -91,7 +91,9 @@ namespace ncs2019_team_TBD.Controllers
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+
 			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", model.Product.CategoryId);
+			ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
 			return View(model);
 		}
 
@@ -104,13 +106,25 @@ namespace ncs2019_team_TBD.Controllers
 				return NotFound();
 			}
 
-			var product = await _context.Products.FindAsync(id);
-			if (product == null)
+			var m = new Modelo
+			{
+				Product = new Product(),
+			};
+
+			m.Product = (await _context.Products
+				.Include(x => x.ProductMaterials)
+				.FirstOrDefaultAsync(x => x.Id == id));
+
+			if (m.Product == null || m == null)
 			{
 				return NotFound();
 			}
-			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-			return View(product);
+			m.SelectedMaterials = m.Product.ProductMaterials.Select(x => x.MaterialId.ToString()).ToList();
+
+			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", m.Product.CategoryId);
+			ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
+
+			return View(m);
 		}
 
 		// POST: Products/Edit/5
@@ -118,16 +132,18 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Description,InventoryQuantity,SerialNumber,Price,Id,Name")] Product product)
+		public async Task<IActionResult> Edit(int id, Modelo model)
 		{
-			if (id != product.Id)
+			if (id != model.Product.Id)
 			{
 				return NotFound();
 			}
+			
+			var m = (await _context.Products
+					.Include(x => x.ProductMaterials)
+					.FirstOrDefaultAsync(x => x.Id == id));
 
-			var existing = await _context.Products.FindAsync(id);
-
-			if (existing == null)
+			if (m == null)
 			{
 				return NotFound();
 			}
@@ -135,20 +151,27 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				try
 				{
-					existing.CategoryId = product.CategoryId;
-					existing.Description = product.Description;
-					existing.InventoryQuantity = product.InventoryQuantity;
-					existing.SerialNumber = product.SerialNumber;
-					existing.Price = product.Price;
-					existing.Name = product.Name;
-					existing.DateUpdated = DateTime.UtcNow;
+					m.CategoryId = model.Product.CategoryId;
+					m.Description = model.Product.Description;
+					m.InventoryQuantity = model.Product.InventoryQuantity;
+					m.SerialNumber = model.Product.SerialNumber;
+					m.Price = model.Product.Price;
+					m.Name = model.Product.Name;
+					m.DateUpdated = DateTime.UtcNow;
 
-					_context.Update(existing);
+					m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
+					{
+						MaterialId = int.Parse(x),
+						ProductId = model.Product.Id
+					}).ToList();
+
+
+					_context.Update(m);
 					await _context.SaveChangesAsync();
 				}
 				catch (DbUpdateConcurrencyException)
 				{
-					if (!ProductExists(existing.Id))
+					if (!ProductExists(m.Id))
 					{
 						return NotFound();
 					}
@@ -159,8 +182,10 @@ namespace ncs2019_team_TBD.Controllers
 				}
 				return RedirectToAction(nameof(Index));
 			}
-			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", existing.CategoryId);
-			return View(product);
+
+			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", m.CategoryId);
+			ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
+			return View(m);
 		}
 
 		// GET: Products/Delete/5
