@@ -119,8 +119,9 @@ namespace ncs2019_team_TBD.Controllers
                     existing.InventoryQuantity = product.InventoryQuantity;
                     existing.SerialNumber = product.SerialNumber;
                     existing.Price = product.Price;
-                    existing.Id = product.Id;
                     existing.Name = product.Name;
+					existing.DateUpdated = DateTime.UtcNow;
+
                     _context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
