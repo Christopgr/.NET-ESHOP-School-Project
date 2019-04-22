@@ -10,6 +10,12 @@ using ncs2019_team_TBD.Models;
 
 namespace ncs2019_team_TBD.Controllers
 {
+	/// <summary>
+	/// xreiazomaste ena kainourgio modelo pou tha kaluptei to Products kai ta ProductMaterial kai
+	/// xrhsimopoieitai mono gia thn epikoinwnia View kai Controller (den pernaei autousio sthn vash
+	/// opws ginetai sta alla montela)
+	/// Opote to class Modelo periexei ena Product kai mia lista me to ti epelexe o xrhsths apo to checkbox list
+	/// </summary>
 	public class Modelo
 	{
 		public Product Product { get; set; }
@@ -57,11 +63,11 @@ namespace ncs2019_team_TBD.Controllers
 		{
 			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
 			ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
-
+			//pairnoume tis listes me ta Categories kai Materials p tha emfanisoume ston xrhsth na epilexei 
+			//kai dhmiourgoume to modelo pou tha analabei thn epikoinwnia
 			var m = new Modelo
 			{
-				Product = new Product(),
-
+				Product = new Product()
 			};
 
 			return View(m);
@@ -79,8 +85,9 @@ namespace ncs2019_team_TBD.Controllers
 				model.Product.DateCreated = DateTime.UtcNow;
 				model.Product.DateUpdated = DateTime.UtcNow;
 				//product.UserCreated = Guid.NewGuid();
-				// product.UserUpdated = Guid.NewGuid();
-
+				//product.UserUpdated = Guid.NewGuid();
+				//ousiastika enwnoume to model.Product.ProductMaterials me to model.SelectedMaterials
+				//kai to sprwxnoumes sthn vash kai dhmiourgei mono tou tis eggrafes ston pinaka ProductMaterials
 				model.Product.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
 				{
 					MaterialId = int.Parse(x),
@@ -110,7 +117,7 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				Product = new Product(),
 			};
-
+			//trabame to Product pou exei h db MAZI me ta ProductMaterial mesw tou .Include (union, join, etc)
 			m.Product = (await _context.Products
 				.Include(x => x.ProductMaterials)
 				.FirstOrDefaultAsync(x => x.Id == id));
@@ -119,6 +126,7 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				return NotFound();
 			}
+			//gemizei to modelo.SelectedMaterials me auta pou efere apo thn vash gia na ta steilei sto View
 			m.SelectedMaterials = m.Product.ProductMaterials.Select(x => x.MaterialId.ToString()).ToList();
 
 			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", m.Product.CategoryId);
@@ -138,7 +146,7 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				return NotFound();
 			}
-			
+			//fernei apo thn vash to Products mazi me ta ProductMaterials alla ta vazei se ena Product m
 			var m = (await _context.Products
 					.Include(x => x.ProductMaterials)
 					.FirstOrDefaultAsync(x => x.Id == id));
@@ -151,6 +159,8 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				try
 				{
+					//gemizei to Product m apo to modelo.Product kai 
+					//to Product.ProductMaterial me to modelo.SelectedMaterials ta kainourgia pou esteile to View
 					m.CategoryId = model.Product.CategoryId;
 					m.Description = model.Product.Description;
 					m.InventoryQuantity = model.Product.InventoryQuantity;
