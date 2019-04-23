@@ -19,7 +19,9 @@ namespace ncs2019_team_TBD.Data
 
         public DbSet<Material> Materials { get; set; }
 
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<CartItem> CartItems { get; set; }
 
         public DbSet<ProductMaterial> ProductMaterials { get; set; }
 
@@ -40,7 +42,8 @@ namespace ncs2019_team_TBD.Data
 				entity.HasOne(x => x.Category).WithMany(c => c.Products).HasForeignKey(f => f.CategoryId);
 				//declare that Product can be in many ProductMaterials
 				entity.HasMany(x => x.ProductMaterials);
-				entity.HasMany(x => x.OrderProducts);
+				entity.HasMany(x => x.OrderItems);
+				entity.HasMany(x => x.CartItems);
 				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
 			});
 
@@ -62,7 +65,7 @@ namespace ncs2019_team_TBD.Data
 				entity.HasKey(x => x.Id);
 				entity.HasOne(x => x.User).WithMany(c => c.Orders).HasForeignKey(f => f.UserId);
 				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
-				entity.HasMany(x => x.OrderProducts);
+				entity.HasMany(x => x.OrderItems);
 			});
 
 			builder.Entity<ProductMaterial>(entity => {
@@ -70,11 +73,19 @@ namespace ncs2019_team_TBD.Data
 				//declare primary key with 2 foreign keys
 				entity.HasKey(x => new { x.ProductId, x.MaterialId });
 			});
-			
-			builder.Entity<OrderProduct>(entity => {
-				entity.ToTable("OrderProducts");
+
+			builder.Entity<OrderItem>(entity => {
+				entity.ToTable("OrderItems");
+				//declare primary key with 2 foreign keys
 				entity.HasKey(x => new { x.ProductId, x.OrderId });
 			});
+
+			builder.Entity<CartItem>(entity => {
+				entity.ToTable("CartItems");
+				//declare primary key with 2 foreign keys
+				entity.HasKey(x => new { x.ProductId, x.CartId });
+			});
+			
 		}
 	}
 }

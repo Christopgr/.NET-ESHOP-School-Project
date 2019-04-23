@@ -192,7 +192,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 215, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 23, 14, 45, 44, 405, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -215,7 +215,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 216, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 23, 14, 45, 44, 406, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -238,7 +238,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 218, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 23, 14, 45, 44, 408, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -284,7 +284,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 214, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 23, 14, 45, 44, 404, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 

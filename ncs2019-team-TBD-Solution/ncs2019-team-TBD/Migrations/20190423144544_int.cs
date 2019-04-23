@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ncs2019_team_TBD.Migrations
 {
-    public partial class init : Migration
+    public partial class @int : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 21, 10, 55, 52, 215, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 23, 14, 45, 44, 405, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false)
@@ -71,7 +71,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 21, 10, 55, 52, 216, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 23, 14, 45, 44, 406, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false)
@@ -221,7 +221,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 21, 10, 55, 52, 214, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 23, 14, 45, 44, 404, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false),
@@ -249,7 +249,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 21, 10, 55, 52, 218, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 23, 14, 45, 44, 408, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false),
