@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ncs2019_team_TBD.Data;
 
 namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190426090929_item")]
+    partial class item
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,35 +186,6 @@ namespace ncs2019_team_TBD.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ncs2019_team_TBD.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 12, 33, 207, DateTimeKind.Utc));
-
-                    b.Property<DateTime>("DateUpdated");
-
-                    b.Property<string>("Name");
-
-                    b.Property<Guid>("UserCreated");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<int?>("UserId1");
-
-                    b.Property<Guid>("UserUpdated");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Carts");
-                });
-
             modelBuilder.Entity("ncs2019_team_TBD.Models.CartItem", b =>
                 {
                     b.Property<int>("ProductId");
@@ -222,8 +195,6 @@ namespace ncs2019_team_TBD.Migrations
                     b.Property<int>("Quantity");
 
                     b.HasKey("ProductId", "CartId");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("CartItems");
                 });
@@ -236,7 +207,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 12, 33, 199, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 9, 29, 590, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -259,7 +230,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 12, 33, 201, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 9, 29, 591, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -282,7 +253,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 12, 33, 203, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 9, 29, 594, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -328,7 +299,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 12, 33, 197, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 26, 9, 9, 29, 588, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -452,20 +423,8 @@ namespace ncs2019_team_TBD.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ncs2019_team_TBD.Models.Cart", b =>
-                {
-                    b.HasOne("ncs2019_team_TBD.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-                });
-
             modelBuilder.Entity("ncs2019_team_TBD.Models.CartItem", b =>
                 {
-                    b.HasOne("ncs2019_team_TBD.Models.Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("ncs2019_team_TBD.Models.Product")
                         .WithMany("CartItems")
                         .HasForeignKey("ProductId")

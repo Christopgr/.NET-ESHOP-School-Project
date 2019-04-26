@@ -11,6 +11,6 @@ namespace ncs2019_team_TBD.Models
 
 		public virtual User User { get; set; }
 
-		public ICollection<CartItem> CartItem { get; set; }
+		public ICollection<CartItem> CartItems { get; set; }
 	}
 }

@@ -68,6 +68,14 @@ namespace ncs2019_team_TBD.Data
 				entity.HasMany(x => x.OrderItems);
 			});
 
+			builder.Entity<Cart>(entity => {
+				entity.ToTable("Carts");
+				entity.HasKey(x => x.Id);
+				entity.HasOne(x => x.User);
+				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
+				entity.HasMany(x => x.CartItems);
+			});
+
 			builder.Entity<ProductMaterial>(entity => {
 				entity.ToTable("ProductMaterials");
 				//declare primary key with 2 foreign keys
