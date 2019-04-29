@@ -18,11 +18,12 @@ namespace ncs2019_team_TBD.Controllers
 			_context = context;
 		}
 
-		public IActionResult Index()
-        {
-            return View();
-        }
-		
+		public async Task<IActionResult> Index(int CartId)
+		{
+			var c = _context.Cart.Include(ci => ci.CartItems).FirstOrDefaultAsync(x => x.Id == CartId);
+			return View(c);
+		}
+
 		//POST
 		public async Task<IActionResult> Add(int CartId, int ProductId, int Quantity)
 		{
@@ -35,23 +36,31 @@ namespace ncs2019_team_TBD.Controllers
 				return NotFound();
 			}
 
-			var cp = new CartItem
+			var p = await _context.Products.FindAsync(ProductId);
+
+			if (p.InventoryQuantity - Quantity < 0)
+			{
+				return NotFound();
+			}
+			else {
+				p.InventoryQuantity -= Quantity;
+			}
+
+			var ci = new CartItem
 			{
 				ProductId = ProductId,
 				CartId = c.Id,
 				Quantity = Quantity
 			};
 
-			c.CartItems.Add(cp);
+			c.CartItems.Add(ci);
 
-			return View(c);
+			_context.Add(c);
+			_context.Add(p);
+
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction(nameof(Index));
 		}
-	}
-
-	public class CartProducts {
-		public Product Product { get; set; }
-		public List<string> SelectedProducts { get; set; }
-	}
-
-	
+	}	
 }
