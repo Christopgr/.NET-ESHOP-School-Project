@@ -24,8 +24,15 @@
                 <div class="caption">
                     <h3> @Html.DisplayFor(modelItem => item.Name) </h3>
                     <p> @Html.DisplayFor(modelItem => item.Description) </p>
-                    <p><a href="#" class="btn btn-primary" role="button">Add to Cart</a>  <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a> <u><strong> @Html.DisplayFor(modelItem => item.Price) </strong></u> <span class="glyphicon glyphicon-eur" aria-hidden="true"></span> </p>
-                    @*stin akrivos panw grami  ftiaxnes to path gia to "Add to Cart"*@
+                    <p>
+                        <a href="#" class="btn btn-primary" role="button">Add to Cart</a>
+                        @*stin akrivos panw grami  ftiaxnes to path gia to "Add to Cart"*@
+                        <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
+
+                        <u><strong> @Html.DisplayFor(modelItem => item.Price) </strong></u>
+                        <span class="glyphicon glyphicon-eur" aria-hidden="true"></span>
+                    </p>
+                   
                 </div>
             </div>
         </div>
