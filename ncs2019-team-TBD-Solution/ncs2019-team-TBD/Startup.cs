@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using ncs2019_team_TBD.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ncs2019_team_TBD.Models;
 
 namespace ncs2019_team_TBD
 {
@@ -37,7 +38,7 @@ namespace ncs2019_team_TBD
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

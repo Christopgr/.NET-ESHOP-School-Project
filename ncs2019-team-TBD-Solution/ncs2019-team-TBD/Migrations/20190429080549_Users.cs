@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ncs2019_team_TBD.Migrations
 {
-    public partial class initial : Migration
+    public partial class Users : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,14 @@ namespace ncs2019_team_TBD.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Surname = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    AddressNumber = table.Column<int>(nullable: false),
+                    City = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<int>(nullable: false),
+                    TotalPurchase = table.Column<double>(nullable: false),
+                    ActiveOrder = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,7 +61,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 12, 5, 37, 19, 927, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 29, 8, 5, 49, 649, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false)
@@ -71,7 +78,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 12, 5, 37, 19, 928, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 29, 8, 5, 49, 650, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false)
@@ -79,33 +86,6 @@ namespace ncs2019_team_TBD.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Materials", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    DateUpdated = table.Column<DateTime>(nullable: false),
-                    UserCreated = table.Column<Guid>(nullable: false),
-                    UserUpdated = table.Column<Guid>(nullable: false),
-                    Surname = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Phone = table.Column<int>(nullable: false),
-                    Adress = table.Column<string>(nullable: true),
-                    AdressNumber = table.Column<int>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<int>(nullable: false),
-                    TotalPurchase = table.Column<double>(nullable: false),
-                    ActiveOrder = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,13 +195,39 @@ namespace ncs2019_team_TBD.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 29, 8, 5, 49, 652, DateTimeKind.Utc)),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    UserCreated = table.Column<Guid>(nullable: false),
+                    UserUpdated = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    State = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 12, 5, 37, 19, 925, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 29, 8, 5, 49, 647, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<Guid>(nullable: false),
                     UserUpdated = table.Column<Guid>(nullable: false),
@@ -229,7 +235,7 @@ namespace ncs2019_team_TBD.Migrations
                     Description = table.Column<string>(nullable: true),
                     InventoryQuantity = table.Column<int>(nullable: false),
                     SerialNumber = table.Column<int>(nullable: false),
-                    Price = table.Column<int>(nullable: false)
+                    Price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -238,57 +244,6 @@ namespace ncs2019_team_TBD.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 4, 12, 5, 37, 19, 930, DateTimeKind.Utc)),
-                    DateUpdated = table.Column<DateTime>(nullable: false),
-                    UserCreated = table.Column<Guid>(nullable: false),
-                    UserUpdated = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    State = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductMaterials",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(nullable: false),
-                    MaterialId = table.Column<int>(nullable: false),
-                    Percentage = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductMaterials", x => new { x.ProductId, x.MaterialId });
-                    table.ForeignKey(
-                        name: "FK_ProductMaterials_Materials_MaterialId",
-                        column: x => x.MaterialId,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductMaterials_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -311,6 +266,30 @@ namespace ncs2019_team_TBD.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductMaterials",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(nullable: false),
+                    MaterialId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductMaterials", x => new { x.ProductId, x.MaterialId });
+                    table.ForeignKey(
+                        name: "FK_ProductMaterials_Materials_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "Materials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductMaterials_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -404,9 +383,6 @@ namespace ncs2019_team_TBD.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -416,7 +392,7 @@ namespace ncs2019_team_TBD.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
