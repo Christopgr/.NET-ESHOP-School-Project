@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ncs2019_team_TBD.Data;
 using ncs2019_team_TBD.Models;
 
 namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
@@ -20,18 +21,21 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+		private readonly ApplicationDbContext _context;
 
-        public RegisterModel(
+		public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+			ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-        }
+			_context = context;
+		}
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -90,18 +94,28 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            if (ModelState.IsValid)
-            {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+			if (ModelState.IsValid)
+			{
+				var user = new User { UserName = Input.Email, Email = Input.Email, Address = Input.Address, FirstName = Input.FirstName, LastName = Input.LastName };
+				var cart = new Cart { UserId = user.Id, User = user, DateCreated = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, Name = user.UserName };
+
+				var result = await _userManager.CreateAsync(user, Input.Password);
+
+				if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+					user.Cart = cart;
+
+					_context.Add(cart);
+					await _context.SaveChangesAsync();
+
+					var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,

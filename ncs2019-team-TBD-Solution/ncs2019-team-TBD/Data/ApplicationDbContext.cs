@@ -71,7 +71,7 @@ namespace ncs2019_team_TBD.Data
 			builder.Entity<Cart>(entity => {
 				entity.ToTable("Carts");
 				entity.HasKey(x => x.Id);
-				entity.HasOne(x => x.User);
+				entity.HasOne(x => x.User).WithOne(c => c.Cart);
 				entity.Property(x => x.DateCreated).HasDefaultValue(DateTime.UtcNow);
 				entity.HasMany(x => x.CartItems);
 			});
