@@ -8,7 +8,7 @@ namespace ncs2019_team_TBD.Models
     public class Order : BaseModel
 	{
 
-		public int UserId { get; set; }
+		public string UserId { get; set; }
 
 		public string State { get; set; }
 
