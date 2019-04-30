@@ -4,12 +4,101 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Category</a>
 </p>
-<table class="table">
+
+
+@*edw 8a graftei kodikas*@
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row1::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .row2::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .row2 {
+        margin-top: 30px;
+    }
+
+    /*.Cat_View_Tr {
+    }*/
+</style>
+
+
+@*<p>
+    @*vazoume eikona .... link tis eikonas <a href="https://www.w3schools.com">*@
+@*<img border="0" alt="Rings" src="~/images/Gold Sirma Rings.jpg" width="300" height="300">
+        </a>
+    </p>*@
+
+
+
+@*item???    mayby model ???*@
+
+@foreach (var item in Model)
+{
+    <div class="row1">
+        <div class="column">
+            <p>How to place text over an image11:</p>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> | @*edw*@
+            <img border="0" alt="Rings" src="~/images/Gold_Sirma_Rings.jpg" width="300" height="300">
+        </div>
+        <div class="column">
+            <p>How to place text over an image21:</p>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> | @*edw*@
+            <img border="0" alt="Rings" src="~/images/Set_imipolitimoi.jpg" width="300" height="300">
+        </div>
+        <div class="column">
+            <p>How to place text over an image31:</p>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> | @*edw*@
+            <img border="0" alt="Rings" src="~/images/Nima_Vraxiolia.jpg" width="300" height="300">
+        </div>
+    </div>
+
+    <div class="row2">
+        <div class="column">
+            <p>How to place text over an image 21:</p>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> | @*edw*@
+            <img border="0" alt="Rings" src="~/images/logo.jpg" width="300" height="300">
+        </div>
+        <div class="column">
+            <p>How to place text over an image 22:</p>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> | @*edw*@
+            @Html.DisplayNameFor(model => model.Name)
+            <img border="0" alt="Rings" src="~/images/Nima_vraxioli.jpg" width="300" height="300">
+        </div>
+        <div class="column">
+            <p>How to place text over an imag 23:</p>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> | @*edw*@
+            @Html.DisplayNameFor(model => model.Name)
+            <img border="0" alt="Rings" src="~/images/14457542_185923941834873_8630681949966498675_n.jpg" width="300" height="300">
+        </div>
+    </div>
+
+}
+
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -30,9 +119,13 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
+    <tbody>*@
+
+
+
+@*@foreach (var item in Model)
+    {
+        <tr class="Cat_View_Tr">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -49,11 +142,11 @@
                 @Html.DisplayFor(modelItem => item.UserUpdated)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+@*</td>
         </tr>
-}
-    </tbody>
-</table>
+    }*@
+@*</tbody>
+    </table>*@
