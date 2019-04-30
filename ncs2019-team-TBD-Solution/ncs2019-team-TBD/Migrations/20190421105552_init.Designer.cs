@@ -10,8 +10,8 @@ using ncs2019_team_TBD.Data;
 namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190412053720_initial")]
-    partial class initial
+    [Migration("20190421105552_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,7 +194,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 12, 5, 37, 19, 927, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 215, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -217,7 +217,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 12, 5, 37, 19, 928, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 216, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -240,7 +240,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 12, 5, 37, 19, 930, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 218, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -286,7 +286,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 12, 5, 37, 19, 925, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 4, 21, 10, 55, 52, 214, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -296,7 +296,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Price");
+                    b.Property<double>("Price");
 
                     b.Property<int>("SerialNumber");
 
@@ -316,8 +316,6 @@ namespace ncs2019_team_TBD.Migrations
                     b.Property<int>("ProductId");
 
                     b.Property<int>("MaterialId");
-
-                    b.Property<double>("Percentage");
 
                     b.HasKey("ProductId", "MaterialId");
 

@@ -30,6 +30,6 @@ namespace ncs2019_team_TBD.Models
 			/// <summary>
 			/// a user can have many orders
 			/// </summary>
-			public IEnumerable<Order> Orders { get; set; }
+			public ICollection<Order> Orders { get; set; }
 		}
 }
