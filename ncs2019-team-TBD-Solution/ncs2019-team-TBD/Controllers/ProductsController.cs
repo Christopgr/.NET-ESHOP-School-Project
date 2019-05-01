@@ -163,10 +163,12 @@ namespace ncs2019_team_TBD.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 				model.Product.DateCreated = DateTime.UtcNow;
 				model.Product.DateUpdated = DateTime.UtcNow;
-				//product.UserCreated = Guid.NewGuid();
-				//product.UserUpdated = Guid.NewGuid();
+				model.Product.UserCreated = userId;
+				model.Product.UserUpdated = userId;
 				//ousiastika enwnoume to model.Product.ProductMaterials me to model.SelectedMaterials
 				//kai to sprwxnoumes sthn vash kai dhmiourgei mono tou tis eggrafes ston pinaka ProductMaterials
 				model.Product.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
@@ -239,6 +241,7 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				try
 				{
+					var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 					//gemizei to Product m apo to modelo.Product kai 
 					//to Product.ProductMaterial me to modelo.SelectedMaterials ta kainourgia pou esteile to View
 					m.CategoryId = model.Product.CategoryId;
@@ -248,6 +251,7 @@ namespace ncs2019_team_TBD.Controllers
 					m.Price = model.Product.Price;
 					m.Name = model.Product.Name;
 					m.DateUpdated = DateTime.UtcNow;
+					m.UserUpdated = userId;
 
 					m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
 					{
