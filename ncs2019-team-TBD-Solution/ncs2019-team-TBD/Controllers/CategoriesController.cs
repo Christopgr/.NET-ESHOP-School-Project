@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,12 @@ namespace ncs2019_team_TBD.Controllers
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+		private readonly UserManager<User> _userManager;
 
-        public CategoriesController(ApplicationDbContext context)
+		public CategoriesController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+			_userManager = userManager;
         }
 
         // GET: Categories
@@ -59,8 +63,12 @@ namespace ncs2019_team_TBD.Controllers
         {
             if (ModelState.IsValid)
             {
+				var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 				category.DateCreated = DateTime.UtcNow;
                 category.DateUpdated = DateTime.UtcNow;
+                category.UserCreated = userId;
+                category.UserUpdated = userId;
 
                 _context.Add(category);
                 await _context.SaveChangesAsync();
@@ -108,7 +116,10 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
+					var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 					existing.DateUpdated = DateTime.UtcNow;
+					existing.UserUpdated = userId;
 					existing.Name = category.Name;
                     _context.Update(existing);
                     await _context.SaveChangesAsync();

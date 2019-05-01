@@ -63,8 +63,8 @@ namespace ncs2019_team_TBD.Controllers
             {
                 order.DateCreated = DateTime.UtcNow;
                 order.DateUpdated = DateTime.UtcNow;
-                order.UserCreated = Guid.NewGuid();
-                order.UserUpdated = Guid.NewGuid();
+                //order.UserCreated = Guid.NewGuid();
+                //order.UserUpdated = Guid.NewGuid();
 
                 _context.Add(order);
                 await _context.SaveChangesAsync();
