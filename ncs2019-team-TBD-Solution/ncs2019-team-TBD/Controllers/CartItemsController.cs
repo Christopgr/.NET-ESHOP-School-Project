@@ -45,10 +45,11 @@ namespace ncs2019_team_TBD.Controllers
 			};
 
             decimal finalprice = 0;
+			
             foreach (var item in c.CartItems) {
-                
-				l.ProductList.Add(await _context.Products.FindAsync(item.ProductId));
-                var Price1 = _context.Products.Find(item.ProductId).Price * item.Quantity;
+				Product p = await _context.Products.FindAsync(item.ProductId);
+				l.ProductList.Add(p);
+                var Price1 = p.Price * item.Quantity;
                 finalprice = finalprice + Price1;
             }
             ViewBag.finalprice = finalprice;
