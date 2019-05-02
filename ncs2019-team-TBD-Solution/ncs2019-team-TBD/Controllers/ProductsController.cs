@@ -38,6 +38,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Products/Add/{productId}&{quantity}
+		//[HttpPost]
 		public async Task<IActionResult> Add(int productId, int quantity)
 		{
 			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

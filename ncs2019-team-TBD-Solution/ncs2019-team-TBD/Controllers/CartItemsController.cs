@@ -25,14 +25,29 @@ namespace ncs2019_team_TBD.Controllers
             _userManager = userManager;
         }
 
-        // GET: CartItems
-        public async Task<IActionResult> Index()
+		public class ItemProd
+		{
+			public Cart TempCart { get; set; }
+			public List<Product> ProductList = new List<Product>();
+		}
+
+		// GET: CartItems
+		public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
-            
+			
+			var l = new ItemProd
+			{
+				TempCart = c
+			};
 
-            return View(c.CartItems);
+			foreach (var item in c.CartItems) {
+				l.ProductList.Add(await _context.Products.FindAsync(item.ProductId));
+			}
+			//mporw kai na mhn steilw to Cart
+
+			return View(l);
         }
 
         // GET: CartItems/Details/5

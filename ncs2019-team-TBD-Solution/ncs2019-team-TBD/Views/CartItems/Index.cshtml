@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ncs2019_team_TBD.Models.CartItem>
+﻿@model ncs2019_team_TBD.Controllers.CartItemsController.ItemProd
 
 @{
     ViewData["Title"] = "Index";
@@ -13,29 +13,30 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductId)
+               Product
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+               Quantity
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.TempCart.CartItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
