@@ -29,6 +29,7 @@ namespace ncs2019_team_TBD.Controllers
 		{
 			public Cart TempCart { get; set; }
 			public List<Product> ProductList = new List<Product>();
+
 		}
 
 		// GET: CartItems
@@ -37,17 +38,24 @@ namespace ncs2019_team_TBD.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
 			
+
 			var l = new ItemProd
 			{
 				TempCart = c
 			};
 
-			foreach (var item in c.CartItems) {
+            decimal finalprice = 0;
+            foreach (var item in c.CartItems) {
+                
 				l.ProductList.Add(await _context.Products.FindAsync(item.ProductId));
-			}
-			//mporw kai na mhn steilw to Cart
+                var Price1 = _context.Products.Find(item.ProductId).Price * item.Quantity;
+                finalprice = finalprice + Price1;
+            }
+            ViewBag.finalprice = finalprice;
 
-			return View(l);
+            //mporw kai na mhn steilw to Cart
+
+            return View(l);
         }
 
         // GET: CartItems/Details/5
