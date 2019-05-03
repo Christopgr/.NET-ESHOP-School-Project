@@ -8,23 +8,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        /*
-        body, html {
-            height: 100%;
-            margin: 0;
-            /*background-image: url("");
-        }
-        .bg {
-            /* The image used 
-            background-image: url("backround.jpg");
-            /* Full height 
-            height: 100%;
-            /* Center and scale the image nicely 
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }*/
-
+       
         .topnav #myLinks {
             display: none;
         }
@@ -70,10 +54,6 @@
 
 <body>
 
-    @*<div class="bg">
-     <p class="py-5 text-center"></p>
-    </div>*@
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -85,11 +65,11 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"> <img border="0" alt="WHAKAKAI" src="~/images/logo.jpg" width="75" height="45"></a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"> <img border="0" alt="WHAKAKAI" src="~/images/logo.jpg" width="80" height="45"></a>
 
 
 
-                <!-- Top Navigation Menu -->
+                <!-- Top Navigation Menu -  mas xalaei na layout -->
                 <div class="topnav">
 
                     <div id="myLinks">
@@ -106,125 +86,111 @@
 
             </div>
 
-            @*<ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                </ul>*@
-
-            <script>
-                function myFunction() {
-                    var x = document.getElementById("myLinks");
-                    if (x.style.display === "block") {
-                        x.style.display = "none";
-                    } else {
-                        x.style.display = "block";
-                    }
-                }
-            </script>
-
-
-            <style>
-                .navbar-inverse {
-                    background-color: #9bc2ea;
-                }
-
-                .navbar-fixed-top {
-                    top: 0;
-                    border-width: 0 0 0px;
-                }
-
-                .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
-                    margin-left: -90px;
-                    color: #080000;
-                }
-
-
-                .navbar-inverse .navbar-nav > li > a {
-                    color: #080000;
-                }
-
-
-                .col-container {
-                    display: table;
-                    width: 90%;
-                }
-
-                .col {
-                    display: table-cell;
-                    padding: 6px;
-                }
-
-                .footer {
-                    position: fixed;
-                    left: 0;
-                    bottom: 0;
-                    width: 100%;
-                    background-color: #9bc2ea;
-                    color: black;
-                    text-align: left;
-                }
-
-                .footer-fixed-bottom {
-                    bottom: 0;
-                    border-width: 0 0 0px;
-                }
-
-                #footer-content {
-                    color: #080000;
-                    text-align: left; /*left?*/
-                }
-
-                a:hover, a:focus {
-                    color: #ffffff;
-                    text-decoration: underline;
-                }
-
-                a {
-                    color: #000000;
-                    text-decoration: none;
-                }
-            </style>
-
             <div class="navbar-collapse collapse">
                 <partial name="_LoginPartial" />
             </div>
+
         </div>
-
-
-
-
-
     </nav>
 
     <partial name="_CookieConsentPartial" />
+
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
+
+    <style>
+        .navbar-inverse {
+            background-color: #9bc2ea;
+        }
+
+        .navbar-fixed-top {
+            top: 0;
+            border-width: 0 0 0px;
+        }
+
+        .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+            margin-left: -90px;
+            color: #080000;
+        }
+
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #080000;
+        }
+
+
+        .col-container {
+            display: table;
+            width: 90%;
+        }
+
+        .col {
+            display: table-cell;
+            padding: 6px;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #9bc2ea;
+            color: black;
+            text-align: left;
+        }
+
+        .footer-fixed-bottom {
+            bottom: 0;
+            border-width: 0 0 0px;
+        }
+
+        #footer-content {
+            color: #080000;
+            text-align: left;
+        }
+
+        a:hover, a:focus {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: none;
+        }
+    </style>
 
     <div class="container body-content">
         @RenderBody()
         <hr />
 
-
-
         <footer class="footer">
 
             <div class="col-container">
                 <div class="col" style="background:none">
-                    <p>&copy; April 2019 - Whakakai Handmade Jewellery - eShop Project Coding School</p>
+                   <strong> <p>&copy; April 2019 - Whakakai Handmade Jewellery - eShop Project Coding School</p> </strong>
                 </div>
 
                 <div id="footer-content">
                     <div class="col" style="background:none">
-                        <a asp-area="" asp-controller="Home" asp-action="About"><h4>About</h4></a>
+                        <a asp-area="" asp-controller="Home" asp-action="About"><h4>About US </h4></a>
                     </div>
                     <div class="col" style="background:none">
-                        <a asp-area="" asp-controller="Home" asp-action="Contact"><h4>Contact</h4></a>
+                        <a asp-area="" asp-controller="Home" asp-action="Contact"><h4>Contact Us</h4></a>
                     </div>
                 </div>
 
             </div>
-
-
         </footer>
-
-
     </div>
 
     <environment include="Development">
