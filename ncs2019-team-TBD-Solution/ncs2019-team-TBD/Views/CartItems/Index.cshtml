@@ -1,0 +1,74 @@
+﻿@model ncs2019_team_TBD.Controllers.CartItemsController.ItemProd
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TempCart.CartItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+            <tr></tr>
+            <!--
+
+            -->
+        }
+    </tbody>
+    <tr>
+        <th>Total Cost: </th>
+        <th></th>
+        <th></th>
+        <th>@ViewBag.finalprice</th>
+        <th>
+        </th>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><a asp-action="Views/Checkout" class="btn btn-primary" role="button">Proceed to Checkout</a></td>
+    </tr>
+</table>

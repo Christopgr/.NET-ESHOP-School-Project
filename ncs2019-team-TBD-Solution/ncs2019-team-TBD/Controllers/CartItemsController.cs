@@ -1,36 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ncs2019_team_TBD.Data;
 using ncs2019_team_TBD.Models;
-using System.Diagnostics;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 
 namespace ncs2019_team_TBD.Controllers
 {
-    public class MaterialsController : Controller
+    public class CartItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
-		private readonly UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
 
-		public MaterialsController(ApplicationDbContext context, UserManager<User> userManager)
+        
+
+        public CartItemsController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-			_userManager = userManager;
-		}
-
-        // GET: Materials
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Materials.ToListAsync());
+            _userManager = userManager;
         }
 
-        // GET: Materials/Details/5
+		public class ItemProd
+		{
+			public Cart TempCart { get; set; }
+			public List<Product> ProductList = new List<Product>();
+
+		}
+
+		// GET: CartItems
+		public async Task<IActionResult> Index()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
+			
+
+			var l = new ItemProd
+			{
+				TempCart = c
+			};
+
+            decimal finalprice = 0;
+			
+            foreach (var item in c.CartItems) {
+				Product p = await _context.Products.FindAsync(item.ProductId);
+				l.ProductList.Add(p);
+                var Price1 = p.Price * item.Quantity;
+                finalprice = finalprice + Price1;
+            }
+            ViewBag.finalprice = finalprice;
+
+            //mporw kai na mhn steilw to Cart
+
+            return View(l);
+        }
+
+        // GET: CartItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,49 +67,39 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (material == null)
+            var cartItem = await _context.CartItems
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(material);
+            return View(cartItem);
         }
 
-        // GET: Materials/Create
+        // GET: CartItems/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Materials/Create
+        // POST: CartItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
-		{
+        public async Task<IActionResult> Create([Bind("CartId,ProductId,Quantity")] CartItem cartItem)
+        {
             if (ModelState.IsValid)
             {
-				var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-				material.DateCreated = DateTime.UtcNow;
-				material.DateUpdated = DateTime.UtcNow;
-
-				material.UserCreated = userId;
-				material.UserUpdated = userId;
-
-				_context.Add(material);
+                _context.Add(cartItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-
-            return View(material);
+            return View(cartItem);
         }
 
-        // GET: Materials/Edit/5
+        // GET: CartItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,30 +107,22 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var material = await _context.Materials.FindAsync(id);
-            if (material == null)
+            var cartItem = await _context.CartItems.FindAsync(id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
-
-			return View(material);
+            return View(cartItem);
         }
 
-        // POST: Materials/Edit/5
+        // POST: CartItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
-		{
-			if (id != material.Id)
-			{
-				return NotFound();
-			}
-
-			var existing = await _context.Materials.FindAsync(id);
-
-			if (existing == null)
+        public async Task<IActionResult> Edit(int id, [Bind("CartId,ProductId,Quantity")] CartItem cartItem)
+        {
+            if (id != cartItem.ProductId)
             {
                 return NotFound();
             }
@@ -120,20 +131,12 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
-					var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-					existing.DateUpdated = DateTime.UtcNow;
-					existing.Name = material.Name;
-					existing.UserUpdated = userId;
-					//oti den exei parei apo to Bind
-					//existing.UserUpdated = material.UserUpdated
-
-					_context.Update(existing);
+                    _context.Update(cartItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaterialExists(existing.Id))
+                    if (!CartItemExists(cartItem.ProductId))
                     {
                         return NotFound();
                     }
@@ -142,12 +145,12 @@ namespace ncs2019_team_TBD.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Edit));
+                return RedirectToAction(nameof(Index));
             }
-            return View(existing);
+            return View(cartItem);
         }
 
-        // GET: Materials/Delete/5
+        // GET: CartItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,30 +158,30 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (material == null)
+            var cartItem = await _context.CartItems
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(material);
+            return View(cartItem);
         }
 
-        // POST: Materials/Delete/5
+        // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var material = await _context.Materials.FindAsync(id);
-            _context.Materials.Remove(material);
+            var cartItem = await _context.CartItems.FindAsync(id);
+            _context.CartItems.Remove(cartItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MaterialExists(int id)
+        private bool CartItemExists(int id)
         {
-            return _context.Materials.Any(e => e.Id == id);
+            return _context.CartItems.Any(e => e.ProductId == id);
         }
     }
 }

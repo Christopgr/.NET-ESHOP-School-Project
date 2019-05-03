@@ -141,17 +141,17 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 16, 30, 41, 626, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 175, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
                     b.Property<string>("UserId");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -185,15 +185,15 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 16, 30, 41, 619, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 169, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -208,15 +208,15 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 16, 30, 41, 621, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 171, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -231,7 +231,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 16, 30, 41, 623, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 172, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -239,11 +239,11 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<string>("State");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
                     b.Property<string>("UserId");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -277,7 +277,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 16, 30, 41, 618, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 167, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -287,13 +287,13 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<double>("Price");
+                    b.Property<decimal>("Price");
 
                     b.Property<int>("SerialNumber");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 

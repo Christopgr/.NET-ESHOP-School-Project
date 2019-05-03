@@ -16,9 +16,9 @@ namespace ncs2019_team_TBD.Models
 
 		public DateTime DateUpdated { get; set; }
 
-		public Guid UserCreated { get; set; }
+		public string UserCreated { get; set; }
 
-		public Guid UserUpdated { get; set; }
+		public string UserUpdated { get; set; }
 
 	}
 }

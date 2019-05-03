@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +29,89 @@ namespace ncs2019_team_TBD.Controllers
 	public class ProductsController : Controller
 	{
 		private readonly ApplicationDbContext _context;
-		public ProductsController(ApplicationDbContext context)
+		private readonly UserManager<User> _userManager;
+
+		public ProductsController(ApplicationDbContext context, UserManager<User> userManager)
 		{
 			_context = context;
+			_userManager = userManager;
+		}
+
+		// GET: Products/Add/{productId}&{quantity}
+		//[HttpPost]
+		public async Task<IActionResult> Add(int productId, int quantity)
+		{
+			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
+
+			if (c == null)
+			{
+				return NotFound();
+			}
+
+			var p = await _context.Products.FindAsync(productId);
+			
+			if (c.CartItems.Any(x => x.ProductId == productId))
+			{
+				foreach (var i in c.CartItems)
+				{
+					if (i.ProductId == productId)
+					{
+						if (p.InventoryQuantity - quantity < 0)
+						{
+							return NotFound();
+						}
+						//else
+						//{
+						//	p.InventoryQuantity -= quantity;
+						//}
+						i.Quantity += quantity;
+					}
+				}
+
+				_context.Update(c);
+				//_context.Update(p);
+
+				await _context.SaveChangesAsync();
+
+				return RedirectToAction(nameof(Index));
+			}
+			else
+			{
+
+				//m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
+				//{
+				//	MaterialId = int.Parse(x),
+				//	ProductId = model.Product.Id
+				//}).ToList();
+
+				if (p.InventoryQuantity - quantity < 0)
+				{
+					return NotFound();
+				} 
+				//mono otan ginei to order
+				//else
+				//{
+				//	p.InventoryQuantity -= quantity;
+				//}
+
+				var ci = new CartItem
+				{
+					ProductId = productId,
+					CartId = c.Id,
+					Quantity = quantity
+				};
+
+				c.CartItems.Add(ci);
+
+				_context.Update(c);
+				//_context.Update(p);
+
+				await _context.SaveChangesAsync();
+
+				return RedirectToAction(nameof(Index));
+			}
 		}
 
 		// GET: Products
@@ -82,10 +164,12 @@ namespace ncs2019_team_TBD.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 				model.Product.DateCreated = DateTime.UtcNow;
 				model.Product.DateUpdated = DateTime.UtcNow;
-				//product.UserCreated = Guid.NewGuid();
-				//product.UserUpdated = Guid.NewGuid();
+				model.Product.UserCreated = userId;
+				model.Product.UserUpdated = userId;
 				//ousiastika enwnoume to model.Product.ProductMaterials me to model.SelectedMaterials
 				//kai to sprwxnoumes sthn vash kai dhmiourgei mono tou tis eggrafes ston pinaka ProductMaterials
 				model.Product.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
@@ -107,7 +191,6 @@ namespace ncs2019_team_TBD.Controllers
 		// GET: Products/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
-
 			if (id == null)
 			{
 				return NotFound();
@@ -159,6 +242,7 @@ namespace ncs2019_team_TBD.Controllers
 			{
 				try
 				{
+					var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 					//gemizei to Product m apo to modelo.Product kai 
 					//to Product.ProductMaterial me to modelo.SelectedMaterials ta kainourgia pou esteile to View
 					m.CategoryId = model.Product.CategoryId;
@@ -168,6 +252,7 @@ namespace ncs2019_team_TBD.Controllers
 					m.Price = model.Product.Price;
 					m.Name = model.Product.Name;
 					m.DateUpdated = DateTime.UtcNow;
+					m.UserUpdated = userId;
 
 					m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
 					{

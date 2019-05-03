@@ -102,7 +102,7 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
 			if (ModelState.IsValid)
 			{
 				var user = new User { UserName = Input.Email, Email = Input.Email, Address = Input.Address, FirstName = Input.FirstName, LastName = Input.LastName };
-				var cart = new Cart { UserId = user.Id, User = user, DateCreated = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, Name = user.UserName };
+				var cart = new Cart { UserId = user.Id, User = user, DateCreated = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, Name = user.UserName, UserCreated = user.Id, UserUpdated = user.Id };
 
 				var result = await _userManager.CreateAsync(user, Input.Password);
 
