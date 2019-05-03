@@ -23,34 +23,16 @@ namespace ncs2019_team_TBD.Controllers
 			_userManager = userManager;
         }
 
-		public async Task<IActionResult> GetProducts(int? id)
+		// GET: Categories
+		public async Task<IActionResult> Index()
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var c = await _context.Categories.Include(p => p.Products).FirstOrDefaultAsync(x=>x.Id == id);
-
-			if (c == null)
-			{
-				return NotFound();
-			}
-
-			return View(c);
+			//var categories = await _context.Categories.Include(p => p.Products).ToListAsync();
+			var categories = await _context.Categories.ToListAsync();
+			return View(categories);
 		}
 
-        // GET: Categories
-        public async Task<IActionResult> Index()
-        {
-            //var categories = await _context.Categories.Include(p => p.Products).ToListAsync();
-            var categories = await _context.Categories.ToListAsync();
-			return View(categories);
-        }
-
-        
-
-        public async Task<IActionResult> GetProducts(int? id)
+		// GET: Categories/GetProducts/5
+		public async Task<IActionResult> GetProducts(int? id)
         {
             if (id == null)
             {
