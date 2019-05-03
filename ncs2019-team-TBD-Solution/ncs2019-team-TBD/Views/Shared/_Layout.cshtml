@@ -8,7 +8,26 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-       
+
+        #bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+        }
+
+            #bg img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                min-width: 50%;
+                min-height: 50%;
+            }
+    
         .topnav #myLinks {
             display: none;
         }
@@ -53,6 +72,10 @@
 
 
 <body>
+
+    <div id="bg">
+        <img src="~/images/background.jpg" alt="">
+    </div>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -177,7 +200,7 @@
 
             <div class="col-container">
                 <div class="col" style="background:none">
-                   <strong> <p>&copy; April 2019 - Whakakai Handmade Jewellery - eShop Project Coding School</p> </strong>
+                    <strong> <p>&copy; April 2019 - Whakakai Handmade Jewellery - eShop Project Coding School</p> </strong>
                 </div>
 
                 <div id="footer-content">
