@@ -48,6 +48,28 @@ namespace ncs2019_team_TBD.Controllers
 			return View(categories);
         }
 
+        
+
+        public async Task<IActionResult> GetProducts(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var c = await _context.Categories.Include(p => p.Products).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            return View(c);
+            //ViewData["View Products"]=c;
+        }
+
+
+
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
