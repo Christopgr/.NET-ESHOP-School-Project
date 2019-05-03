@@ -10,8 +10,8 @@ using ncs2019_team_TBD.Data;
 namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190430072954_init")]
-    partial class init
+    [Migration("20190503051625_sec")]
+    partial class sec
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,21 +143,23 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 7, 29, 54, 312, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 175, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
                     b.Property<string>("UserId");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Carts");
                 });
@@ -185,15 +187,15 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 7, 29, 54, 308, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 169, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -208,15 +210,15 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 7, 29, 54, 309, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 171, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -231,7 +233,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 7, 29, 54, 311, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 172, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -239,11 +241,11 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<string>("State");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
                     b.Property<string>("UserId");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -277,7 +279,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 4, 30, 7, 29, 54, 306, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 3, 5, 16, 25, 167, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -287,13 +289,13 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<double>("Price");
+                    b.Property<decimal>("Price");
 
                     b.Property<int>("SerialNumber");
 
-                    b.Property<Guid>("UserCreated");
+                    b.Property<string>("UserCreated");
 
-                    b.Property<Guid>("UserUpdated");
+                    b.Property<string>("UserUpdated");
 
                     b.HasKey("Id");
 
@@ -430,8 +432,8 @@ namespace ncs2019_team_TBD.Migrations
             modelBuilder.Entity("ncs2019_team_TBD.Models.Cart", b =>
                 {
                     b.HasOne("ncs2019_team_TBD.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithOne("Cart")
+                        .HasForeignKey("ncs2019_team_TBD.Models.Cart", "UserId");
                 });
 
             modelBuilder.Entity("ncs2019_team_TBD.Models.CartItem", b =>
