@@ -28,6 +28,8 @@ namespace ncs2019_team_TBD.Models
 		/// </summary>
 		public ICollection<ProductMaterial> ProductMaterials { get; set; }
 
-		public ICollection<OrderProduct> OrderProducts { get; set; }
+		public ICollection<OrderItem> OrderItems { get; set; }
+
+		public ICollection<CartItem> CartItems { get; set; }
 	}
 }

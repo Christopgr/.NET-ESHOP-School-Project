@@ -1,23 +1,21 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ncs2019_team_TBD.Models
 {
-		public class User : BaseModel
+		public class User : IdentityUser
 		{
-			public string Surname { get; set; }
+            public string FirstName { get; set; }
 
-			public string Email { get; set; }
+			public string LastName { get; set; }
 
-			public string Password { get; set; }
+            public string Address { get; set; }
 
-			public int Phone { get; set; }
-
-			public string Adress { get; set; }
-
-			public int AdressNumber { get; set; }
+			public int AddressNumber { get; set; }
 
 			public string City { get; set; }
 
@@ -26,7 +24,8 @@ namespace ncs2019_team_TBD.Models
 			public double TotalPurchase { get; set; }
 
 			public Boolean ActiveOrder { get; set; }
-
+	
+			public virtual Cart Cart { get; set; }
 			/// <summary>
 			/// a user can have many orders
 			/// </summary>

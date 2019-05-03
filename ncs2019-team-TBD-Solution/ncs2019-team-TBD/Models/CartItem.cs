@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace ncs2019_team_TBD.Models
 {
-	public class OrderProduct
+	public class CartItem
 	{
-		/// <summary>
-		/// every OrderProduct can have only 1 Order and 1 Product
-		/// </summary>
-		public int OrderId { get; set; }
+		public int CartId { get; set; }
 
 		public int ProductId { get; set; }
+
+		public int Quantity { get; set; }
 	}
 }
