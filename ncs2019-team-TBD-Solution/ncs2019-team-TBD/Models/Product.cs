@@ -22,6 +22,8 @@ namespace ncs2019_team_TBD.Models
 		[DataType(DataType.Currency)]
 		public float Price { get; set; }
 
+        public string Img { get; set; }
+
 		/// <summary>
 		/// only 1 Category
 		/// </summary>
