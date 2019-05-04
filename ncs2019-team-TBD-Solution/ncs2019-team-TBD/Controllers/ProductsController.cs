@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ncs2019_team_TBD.Data;
 using ncs2019_team_TBD.Models;
+using ncs2019_team_TBD.SSD;
 
 namespace ncs2019_team_TBD.Controllers
 {
@@ -23,19 +26,22 @@ namespace ncs2019_team_TBD.Controllers
 		public Product Product { get; set; }
 		public List<string> SelectedMaterials { get; set; }
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	public class ProductsController : Controller
+    
+    public class ProductsController : Controller
 	{
-		private readonly ApplicationDbContext _context;
+        //browse img
+        private readonly HostingEnvironment _hostingEnvironment;
+
+        private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;
 
-		public ProductsController(ApplicationDbContext context, UserManager<User> userManager)
+        
+        public ProductsController(ApplicationDbContext context, UserManager<User> userManager, HostingEnvironment hostingEnvironment)
 		{
 			_context = context;
 			_userManager = userManager;
-		}
+            _hostingEnvironment = hostingEnvironment;
+        }
 
 		// GET: Products/Add/{productId}&{quantity}
 		//[HttpPost]
@@ -192,9 +198,13 @@ namespace ncs2019_team_TBD.Controllers
 				model.Product.DateUpdated = DateTime.UtcNow;
 				model.Product.UserCreated = userId;
 				model.Product.UserUpdated = userId;
-				//ousiastika enwnoume to model.Product.ProductMaterials me to model.SelectedMaterials
-				//kai to sprwxnoumes sthn vash kai dhmiourgei mono tou tis eggrafes ston pinaka ProductMaterials
-				model.Product.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
+
+                
+
+
+                //ousiastika enwnoume to model.Product.ProductMaterials me to model.SelectedMaterials
+                //kai to sprwxnoumes sthn vash kai dhmiourgei mono tou tis eggrafes ston pinaka ProductMaterials
+                model.Product.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
 				{
 					MaterialId = int.Parse(x),
 					ProductId = model.Product.Id
@@ -202,7 +212,41 @@ namespace ncs2019_team_TBD.Controllers
 
 				_context.Add(model.Product);
 				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
+
+                //IMAGE
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+
+                var proim = _context.Products.Find(model.Product.Id);
+
+                if (files.Count > 0)
+                {
+                    var uploads = Path.Combine(webRootPath, SDcs.ImageFolder);
+                    var extension = Path.GetExtension(files[0].FileName);
+                    
+                    if(!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+                    using (var filestream = new FileStream(Path.Combine(uploads, model.Product.Id + extension), FileMode.Create))
+                    //rename the file to the productid /reacts the file to the server
+                    {
+                        files[0].CopyTo(filestream);//moves the file to the server and renames it
+                    }
+                    proim.Img = @"/" + SDcs.ImageFolder + @"/" + model.Product.Id + extension;
+
+                }
+                //else
+                //{
+                //    var uploads = Path.Combine(webRootPath, SDcs.ImageFolder + @"/" + SDcs.DefaultProductImage);
+                //    System.IO.File.Copy(uploads, webRootPath + @"/" + SDcs.ImageFolder + @"/" + model.Product.Id + ".jpg");
+                //    proim.Img = @"/" + SDcs.ImageFolder + @"/" + model.Product.Id + ".jpg";
+                //}
+                await _context.SaveChangesAsync();
+
+
+
+                return RedirectToAction(nameof(Index));
 			}
 
 			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", model.Product.CategoryId);
