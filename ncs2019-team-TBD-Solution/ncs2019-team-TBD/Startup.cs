@@ -13,6 +13,7 @@ using ncs2019_team_TBD.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ncs2019_team_TBD.Models;
+using ncs2019_team_TBD.Areas.Identity.Data;
 
 namespace ncs2019_team_TBD
 {
@@ -39,13 +40,15 @@ namespace ncs2019_team_TBD
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<User>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            UserManager<User> userManager,RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -63,6 +66,8 @@ namespace ncs2019_team_TBD
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            MyIdentityDataInitializer.SeedData(userManager, roleManager);
 
             app.UseMvc(routes =>
             {

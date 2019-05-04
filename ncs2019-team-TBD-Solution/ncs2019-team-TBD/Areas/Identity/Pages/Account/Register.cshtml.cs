@@ -18,17 +18,20 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager; 
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -116,9 +119,13 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
                     AddressNumber = Input.AddressNumber,
                     City = Input.City,
                     ZipCode = Input.ZipCode};
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, "Customer").Wait();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -138,6 +145,9 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
+                
+
             }
 
             // If we got this far, something failed, redisplay form
