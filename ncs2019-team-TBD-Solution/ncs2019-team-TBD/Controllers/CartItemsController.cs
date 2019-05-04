@@ -25,56 +25,48 @@ namespace ncs2019_team_TBD.Controllers
             _userManager = userManager;
         }
 
-		public class ItemProd
-		{
-			public Cart TempCart { get; set; }
-			public List<Product> ProductList = new List<Product>();
+		//public class ItemProd
+		//{
+		//	public Cart TempCart { get; set; }
+		//	public List<Product> ProductList = new List<Product>();
 
-		}
+		//}
 
 		// GET: CartItems
 		public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
-			
-
-			var l = new ItemProd
-			{
-				TempCart = c
-			};
+			var c = await _context.Carts.Include(x => x.CartItems).ThenInclude(k => k.Product).FirstOrDefaultAsync(u => u.UserId == userId);
 
             decimal finalprice = 0;
 			
             foreach (var item in c.CartItems) {
-				Product p = await _context.Products.FindAsync(item.ProductId);
-				l.ProductList.Add(p);
-                var Price1 = p.Price * item.Quantity;
+                var Price1 = item.Product.Price * item.Quantity;
                 finalprice = finalprice + Price1;
             }
             ViewBag.finalprice = finalprice;
 
             //mporw kai na mhn steilw to Cart
 
-            return View(l);
+            return View(c);
         }
 
         // GET: CartItems/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(CartItem cartitem)
         {
-            if (id == null)
+            if (cartitem == null)
             {
                 return NotFound();
             }
 
             var cartItem = await _context.CartItems
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .FirstOrDefaultAsync();
             if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(cartItem);
+            return RedirectToAction("Details", "Products", new { id = cartItem.ProductId });
         }
 
         // GET: CartItems/Create
@@ -100,37 +92,33 @@ namespace ncs2019_team_TBD.Controllers
         }
 
         // GET: CartItems/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(CartItem cartitem)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var cartItem = await _context.CartItems.FindAsync(id);
+            var cartItem = await _context.CartItems.FirstOrDefaultAsync();
             if (cartItem == null)
             {
                 return NotFound();
             }
             return View(cartItem);
         }
+    
 
         // POST: CartItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CartId,ProductId,Quantity")] CartItem cartItem)
+        public async Task<IActionResult> Edit(int id, CartItem cartitem)
         {
-            if (id != cartItem.ProductId)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
+            var cartItem = await _context.CartItems.FirstOrDefaultAsync();
+
+            if (cartItem != null)
             {
                 try
                 {
+                    cartItem.Quantity = cartitem.Quantity;
                     _context.Update(cartItem);
                     await _context.SaveChangesAsync();
                 }
@@ -151,15 +139,15 @@ namespace ncs2019_team_TBD.Controllers
         }
 
         // GET: CartItems/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(CartItem cartitem)
         {
-            if (id == null)
+            if (cartitem == null)
             {
                 return NotFound();
             }
 
             var cartItem = await _context.CartItems
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .FirstOrDefaultAsync();
             if (cartItem == null)
             {
                 return NotFound();
@@ -171,9 +159,10 @@ namespace ncs2019_team_TBD.Controllers
         // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(CartItem cartitem)
         {
-            var cartItem = await _context.CartItems.FindAsync(id);
+            var cartItem = await _context.CartItems
+                .FirstOrDefaultAsync();
             _context.CartItems.Remove(cartItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

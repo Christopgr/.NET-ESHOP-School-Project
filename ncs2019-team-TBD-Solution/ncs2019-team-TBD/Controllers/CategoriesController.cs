@@ -39,9 +39,9 @@ namespace ncs2019_team_TBD.Controllers
                 return NotFound();
             }
 
-            var c = await _context.Categories.Include(p => p.Products).FirstOrDefaultAsync(x => x.Id == id);
+			var c = await _context.Categories.Include(x => x.Products).FirstOrDefaultAsync(o => o.Id == id);
 
-            if (c == null)
+			if (c == null)
             {
                 return NotFound();
             }
@@ -54,7 +54,7 @@ namespace ncs2019_team_TBD.Controllers
 		{
 			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
+			var c = await _context.Carts.Include(x => x.CartItems).ThenInclude(k => k.Product).FirstOrDefaultAsync(u => u.UserId == userId);
 
 			if (c == null)
 			{
@@ -62,67 +62,27 @@ namespace ncs2019_team_TBD.Controllers
 			}
 
 			var p = await _context.Products.FindAsync(productId);
-
-			if (c.CartItems.Any(x => x.ProductId == productId))
+			var item = c.CartItems.Where(x => x.ProductId == productId).FirstOrDefault();
+			if (p != null)
 			{
-				foreach (var i in c.CartItems)
+				if (item != null)
 				{
-					if (i.ProductId == productId)
+					item.Quantity += quantity;
+
+					_context.Update(item);
+
+					await _context.SaveChangesAsync();
+				}
+				else
+				{
+					c.CartItems.Add(new CartItem
 					{
-						if (p.InventoryQuantity - quantity < 0)
-						{
-							return NotFound();
-						}
-						//else
-						//{
-						//	p.InventoryQuantity -= quantity;
-						//}
-						i.Quantity += quantity;
-					}
+						ProductId = productId,
+						Quantity = quantity
+					});
 				}
-
-				_context.Update(c);
-				//_context.Update(p);
-
-				await _context.SaveChangesAsync();
-
-				return RedirectToAction(nameof(GetProducts), new { id = categoryId });
 			}
-			else
-			{
-
-				//m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
-				//{
-				//	MaterialId = int.Parse(x),
-				//	ProductId = model.Product.Id
-				//}).ToList();
-
-				if (p.InventoryQuantity - quantity < 0)
-				{
-					return NotFound();
-				}
-				//mono otan ginei to order
-				//else
-				//{
-				//	p.InventoryQuantity -= quantity;
-				//}
-
-				var ci = new CartItem
-				{
-					ProductId = productId,
-					CartId = c.Id,
-					Quantity = quantity
-				};
-
-				c.CartItems.Add(ci);
-
-				_context.Update(c);
-				//_context.Update(p);
-
-				await _context.SaveChangesAsync();
-
-				return RedirectToAction(nameof(GetProducts));
-			}
+			return RedirectToAction(nameof(GetProducts), new { id = categoryId });
 		}
 
 		// GET: Categories/Details/5

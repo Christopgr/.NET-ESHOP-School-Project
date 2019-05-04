@@ -3,7 +3,7 @@
 *@
 
 
-@model ncs2019_team_TBD.Controllers.MaterialsController.MatProd
+@model ncs2019_team_TBD.Models.Material
 
 
 
@@ -23,20 +23,20 @@
     @*prepei na prosexoume pws onomazoume tis eikones, giati me tin sira tou i pernane sto view, epidi etsi tis kaloume*@
     @{
         int i = 1;
-        @foreach (var item in Model.ProductList)
+        @foreach (var item in Model.ProductMaterials)
         {
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
-                    <img src="@Url.Content(string.Format("~/images/"+i+".jpg", i++))" alt=" @Html.DisplayFor(modelItem => item.Id) " width="242" height="200">
+                    <img src="@Url.Content(string.Format("~/images/"+i+".jpg", i++))" alt=" @Html.DisplayFor(modelItem => item.ProductId) " width="242" height="200">
                     <div class="caption">
-                        <h3> @Html.DisplayFor(modelItem => item.Name) </h3>
-                        <p> @Html.DisplayFor(modelItem => item.Description) </p>
+                        <h3> @Html.DisplayFor(modelItem => item.Product.Name) </h3>
+                        <p> @Html.DisplayFor(modelItem => item.Product.Description) </p>
                         <p>
-                            <a asp-action="Add" asp-route-productId="@item.Id" asp-route-quantity="1" asp-route-materialId="@Model.Mat.Id" class="btn btn-primary" role="button">Add to Cart</a>
+                            <a asp-action="Add" asp-route-productId="@item.ProductId" asp-route-quantity="1" asp-route-materialId="@item.MaterialId" class="btn btn-primary" role="button">Add to Cart</a>
                             @*stin akrivos panw grami  ftiaxnes to path gia to "Add to Cart"*@
-                            <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
+                            <a asp-controller="Products" asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Details</a>
 
-                            <u><strong> @Html.DisplayFor(modelItem => item.Price) </strong></u>
+                            <u><strong> @Html.DisplayFor(modelItem => item.Product.Price) </strong></u>
                             <span class="glyphicon glyphicon-eur" aria-hidden="true"></span>
                         </p>
 
