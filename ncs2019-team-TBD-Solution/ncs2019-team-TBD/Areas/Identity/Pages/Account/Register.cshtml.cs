@@ -19,6 +19,7 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager; 
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 		private readonly ApplicationDbContext _context;
@@ -26,12 +27,14 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
 		public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
 			ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
 			_context = context;
@@ -46,9 +49,11 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name = "First name")]
+            [DataType(DataType.Text)]
             public string FirstName { get; set; }
 
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Last name")]
             public string LastName { get; set; }
 
@@ -69,23 +74,33 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Phone]
+            [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
             [PersonalData]
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Street")]
             public string Address { get; set; }
 
             [PersonalData]
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Number")]
             public int AddressNumber { get; set; }
 
             [PersonalData]
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "City")]
             public string City { get; set; }
+
+            [PersonalData]
+            [Required]
+            [DataType(DataType.PostalCode)]
+            [Display(Name = "Postal Code")]
+            public int ZipCode { get; set; }
 
         }
 
@@ -93,21 +108,36 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
         }
-
-
-
+		
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-			if (ModelState.IsValid)
-			{
-				var user = new User { UserName = Input.Email, Email = Input.Email, Address = Input.Address, FirstName = Input.FirstName, LastName = Input.LastName };
-				var cart = new Cart { UserId = user.Id, User = user, DateCreated = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, Name = user.UserName, UserCreated = user.Id, UserUpdated = user.Id };
+            if (ModelState.IsValid)
+            {
+                var user = new User { UserName = Input.FirstName,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    PhoneNumber = Input.PhoneNumber,
+                    Address = Input.Address,
+                    AddressNumber = Input.AddressNumber,
+                    City = Input.City,
+                    ZipCode = Input.ZipCode};
+
+				var cart = new Cart { UserId = user.Id,
+					User = user,
+					DateCreated = DateTime.UtcNow,
+					DateUpdated = DateTime.UtcNow,
+					Name = user.UserName,
+					UserCreated = user.Id,
+					UserUpdated = user.Id };
 
 				var result = await _userManager.CreateAsync(user, Input.Password);
-
-				if (result.Succeeded)
+                
+                if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, "Customer").Wait();
+
                     _logger.LogInformation("User created a new account with password.");
 
 					user.Cart = cart;

@@ -40,35 +40,30 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-        /*    [Required]
+            [PersonalData]
+            [Required]
             [Display(Name = "First name")]
             public string FirstName { get; set; }
 
+            [PersonalData]
             [Required]
             [Display(Name = "Last name")]
-            public string LastName { get; set; } */
+            public string LastName { get; set; } 
 
+            [PersonalData]
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-      /*      [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; } */
-
-            [Phone]
+            [PersonalData]
+            [Required]
+            [DataType(DataType.PhoneNumber)]
+            [RegularExpression(@"^(\d{10})$", ErrorMessage = "Invalid phone number")]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
-       /*     [PersonalData]
+            [PersonalData]
             [Required]
             [Display(Name = "Street")]
             public string Address { get; set; }
@@ -81,7 +76,13 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account.Manage
             [PersonalData]
             [Required]
             [Display(Name = "City")]
-            public string City { get; set; } */
+            public string City { get; set; }
+
+            [PersonalData]
+            [Required]
+            [DataType(DataType.PostalCode)]
+            [Display(Name = "Postal Code")]
+            public int ZipCode { get; set; }
 
             
         }
@@ -97,6 +98,13 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var firstName = user.FirstName;
+            var lastName = user.LastName;
+            var street = user.Address;
+            var number = user.AddressNumber;
+            var city = user.City;
+            var zip = user.ZipCode;
+
             
 
             Username = userName;
@@ -104,7 +112,13 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
+                Address = street,
+                AddressNumber = number,
+                City = city,
+                ZipCode = zip
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -146,7 +160,44 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+            
+            if(Input.FirstName != user.UserName)
+            {
+                user.UserName = Input.FirstName;
+            }
+            if (Input.FirstName != user.FirstName)
+            {
+                user.FirstName = Input.FirstName;
+                //await _userManager.UpdateAsync(user);
+            }
 
+            if(Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
+            }
+
+            if(Input.Address != user.Address)
+            {
+                user.Address = Input.Address;
+            }
+
+            if(Input.AddressNumber != user.AddressNumber)
+            {
+                user.AddressNumber = Input.AddressNumber;
+            }
+
+            if(Input.City != user.City)
+            {
+                user.City = Input.City;
+            }
+
+            if(Input.ZipCode != user.ZipCode)
+            {
+                user.ZipCode = Input.ZipCode;
+            }
+
+            await _userManager.UpdateAsync(user);
+            
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
