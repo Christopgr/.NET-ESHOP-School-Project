@@ -42,9 +42,11 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name = "First name")]
+            [DataType(DataType.Text)]
             public string FirstName { get; set; }
 
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Last name")]
             public string LastName { get; set; }
 
@@ -65,23 +67,33 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Phone]
+            [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
             [PersonalData]
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Street")]
             public string Address { get; set; }
 
             [PersonalData]
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "Number")]
             public int AddressNumber { get; set; }
 
             [PersonalData]
             [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "City")]
             public string City { get; set; }
+
+            [PersonalData]
+            [Required]
+            [DataType(DataType.PostalCode)]
+            [Display(Name = "Postal Code")]
+            public int ZipCode { get; set; }
 
         }
 
@@ -95,7 +107,15 @@ namespace ncs2019_team_TBD.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.FirstName,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    PhoneNumber = Input.PhoneNumber,
+                    Address = Input.Address,
+                    AddressNumber = Input.AddressNumber,
+                    City = Input.City,
+                    ZipCode = Input.ZipCode};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
