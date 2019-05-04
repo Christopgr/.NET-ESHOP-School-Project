@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
 
-        #bg {
+        #bg { /*backround = this and 1 bellow*/
             position: fixed;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
+            z-index: -9999;
         }
 
             #bg img {
@@ -26,10 +27,15 @@
                 margin: auto;
                 min-width: 50%;
                 min-height: 50%;
+                
             }
     
         .topnav #myLinks {
             display: none;
+        }
+
+        ul.nav.navbar-nav.navbar-right {
+            padding-bottom: 0px;
         }
 
         .topnav a {
@@ -41,7 +47,8 @@
         }
 
             .topnav a.icon {
-                float: left;
+                position:absolute;
+                
             }
 
             .topnav a:hover {
@@ -73,7 +80,7 @@
 
 <body>
 
-    <div id="bg">
+    <div id="bg"> @*backround*@
         <img src="~/images/background.jpg" alt="">
     </div>
 
@@ -131,6 +138,16 @@
     </script>
 
     <style>
+
+        .navbar-brand > img {
+            display: block;
+            position: absolute;
+            left: 0px;
+            top: 0;
+            margin-left: 15px;
+            margin-top: 3px;
+        }
+
         .navbar-inverse {
             background-color: #9bc2ea;
         }
@@ -190,6 +207,10 @@
             color: #000000;
             text-decoration: none;
         }
+
+        h5 {
+            margin-right: 43px
+        }
     </style>
 
     <div class="container body-content">
@@ -205,10 +226,10 @@
 
                 <div id="footer-content">
                     <div class="col" style="background:none">
-                        <a asp-area="" asp-controller="Home" asp-action="About"><h4>About US </h4></a>
+                        <a asp-area="" asp-controller="Home" asp-action="About"><h5><strong>About US</strong></h5></a>
                     </div>
                     <div class="col" style="background:none">
-                        <a asp-area="" asp-controller="Home" asp-action="Contact"><h4>Contact Us</h4></a>
+                        <a asp-area="" asp-controller="Home" asp-action="Contact"><h5><strong>Contact Us</strong></h5></a>
                     </div>
                 </div>
 
