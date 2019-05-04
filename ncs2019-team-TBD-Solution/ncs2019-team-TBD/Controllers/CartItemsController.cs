@@ -139,15 +139,15 @@ namespace ncs2019_team_TBD.Controllers
         }
 
         // GET: CartItems/Delete/5
-        public async Task<IActionResult> Delete(CartItem cartitem)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (cartitem == null)
-            {
-                return NotFound();
-            }
+			if(id == null)
+			{
+				return NotFound();
+			}
 
             var cartItem = await _context.CartItems
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(r=>r.ProductId == id);
             if (cartItem == null)
             {
                 return NotFound();
@@ -159,11 +159,12 @@ namespace ncs2019_team_TBD.Controllers
         // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(CartItem cartitem)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var cartItem = await _context.CartItems
-                .FirstOrDefaultAsync();
-            _context.CartItems.Remove(cartItem);
+			var cartItem = await _context.CartItems
+			   .FirstOrDefaultAsync(r => r.ProductId == id);
+
+			_context.CartItems.Remove(cartItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

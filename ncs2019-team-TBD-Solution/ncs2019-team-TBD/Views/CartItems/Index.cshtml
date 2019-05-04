@@ -51,9 +51,9 @@
                     @Html.DisplayFor(modelItem => item.Product.Price)
                 </td>
                 <td>
-                    <a asp-action="Edit" class="btn btn-primary" role="button" asp-route-id="@item">Edit Quantity</a>
-                    <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item">Details</a>
-                    <a asp-action="Delete" class="btn btn-primary" role="button" asp-route-id="@item">Delete</a>
+                    <a asp-action="Edit" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Edit Quantity</a>
+                    <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Details</a>
+                    <a asp-action="Delete" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Delete</a>
 
                 </td>
             </tr>

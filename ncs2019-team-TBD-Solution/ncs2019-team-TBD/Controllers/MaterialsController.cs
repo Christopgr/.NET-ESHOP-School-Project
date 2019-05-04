@@ -96,6 +96,7 @@ namespace ncs2019_team_TBD.Controllers
 						ProductId = productId,
 						Quantity = quantity
 					});
+					await _context.SaveChangesAsync();
 				}
 			}
 			return RedirectToAction(nameof(GetProducts), new { id = materialId });
