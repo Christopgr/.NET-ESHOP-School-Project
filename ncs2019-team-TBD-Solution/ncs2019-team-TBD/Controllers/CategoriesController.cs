@@ -50,10 +50,83 @@ namespace ncs2019_team_TBD.Controllers
             //ViewData["View Products"]=c;
         }
 
+		public async Task<IActionResult> Add(int productId, int quantity, int categoryId)
+		{
+			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+			var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
 
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+			if (c == null)
+			{
+				return NotFound();
+			}
+
+			var p = await _context.Products.FindAsync(productId);
+
+			if (c.CartItems.Any(x => x.ProductId == productId))
+			{
+				foreach (var i in c.CartItems)
+				{
+					if (i.ProductId == productId)
+					{
+						if (p.InventoryQuantity - quantity < 0)
+						{
+							return NotFound();
+						}
+						//else
+						//{
+						//	p.InventoryQuantity -= quantity;
+						//}
+						i.Quantity += quantity;
+					}
+				}
+
+				_context.Update(c);
+				//_context.Update(p);
+
+				await _context.SaveChangesAsync();
+
+				return RedirectToAction(nameof(GetProducts), new { id = categoryId });
+			}
+			else
+			{
+
+				//m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
+				//{
+				//	MaterialId = int.Parse(x),
+				//	ProductId = model.Product.Id
+				//}).ToList();
+
+				if (p.InventoryQuantity - quantity < 0)
+				{
+					return NotFound();
+				}
+				//mono otan ginei to order
+				//else
+				//{
+				//	p.InventoryQuantity -= quantity;
+				//}
+
+				var ci = new CartItem
+				{
+					ProductId = productId,
+					CartId = c.Id,
+					Quantity = quantity
+				};
+
+				c.CartItems.Add(ci);
+
+				_context.Update(c);
+				//_context.Update(p);
+
+				await _context.SaveChangesAsync();
+
+				return RedirectToAction(nameof(GetProducts));
+			}
+		}
+
+		// GET: Categories/Details/5
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {

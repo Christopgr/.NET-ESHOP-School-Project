@@ -1,7 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .carousel-caption {
+        color: #2b2b2b;
+    }
 
+    .col-md-3 {
+        width: 25%;
+        margin-right: 100px;
+        margin-top: 50px;
+    }
+
+    .wakanda {
+        margin-top: 50px;
+    }
+
+</style>
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -10,35 +25,38 @@
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
+            <img src="~/images/carousel_1.jpg" alt="Products" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
+                    Check our Products.
+                    <a asp-controller="Products" asp-action="Index" class="btn btn-primary" role="button" >See More</a>
+                    @*<a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
+                        See More
+                    </a>*@
                 </p>
             </div>
         </div>
         <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
+            <img src="~/images/carousel_2.jpg" alt="Visual Studio" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
+                    Learn more about our Company.
+                    <a asp-controller="Home" asp-action="About" class="btn btn-primary" role="button">About Us</a>
+                    @*<a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
+            Learn More
+        </a>*@
                 </p>
             </div>
         </div>
         <div class="item">
-            <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
+            <img src="~/images/carousel_3.jpg" alt="Microsoft Azure" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
+                    See our finest collection of materials.
+                    <a asp-controller="Materials" asp-action="Index" class="btn btn-primary" role="button">See More</a>
+                    @*<a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
+            Learn More
+        </a>*@
                 </p>
             </div>
         </div>
@@ -53,7 +71,7 @@
     </a>
 </div>
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-3">
         <h2>Application uses</h2>
         <ul>
@@ -91,4 +109,22 @@
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
         </ul>
     </div>
-</div>
+</div>*@
+
+<div class="row">
+    <div class="col-md-3">
+        <h1>INTRODUCTION</h1>
+        <ul>
+            <li>
+                <h4>
+                    We are a new company but we LOOOVEEEE to make jewelry with our BARE HANDS.
+                    Our goal is to make mon-- ehh people happy from the depths of their walle--- hearts...
+                    I made the first jewelry with my own hands and an extra hand of my friend PEDRO.
+                    We hope to sell our products to the people of Mars so we can fight for our freedom.
+                </h4>
+        </ul>
+    </div>
+
+    
+    <img src="~/images/black_panther.jpg" class="wakanda" alt="whakakai" width="640" height="340" />
+
