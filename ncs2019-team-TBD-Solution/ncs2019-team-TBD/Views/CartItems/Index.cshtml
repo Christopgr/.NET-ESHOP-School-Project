@@ -51,9 +51,10 @@
                     @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Price)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="Edit" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Edit Quantity</a>
+                    <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Details</a>
+                    <a asp-action="Delete" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Delete</a>
+
                 </td>
             </tr>
             <tr></tr>
