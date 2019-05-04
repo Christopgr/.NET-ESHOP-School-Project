@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ncs2019_team_TBD.Migrations
 {
-    public partial class blabla : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,7 +62,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 3, 15, 10, 53, 603, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 4, 10, 26, 11, 688, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<string>(nullable: true),
                     UserUpdated = table.Column<string>(nullable: true)
@@ -79,7 +79,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 3, 15, 10, 53, 617, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 4, 10, 26, 11, 691, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<string>(nullable: true),
                     UserUpdated = table.Column<string>(nullable: true)
@@ -202,7 +202,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 3, 15, 10, 53, 635, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 4, 10, 26, 11, 699, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<string>(nullable: true),
                     UserUpdated = table.Column<string>(nullable: true),
@@ -226,7 +226,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 3, 15, 10, 53, 626, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 4, 10, 26, 11, 695, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<string>(nullable: true),
                     UserUpdated = table.Column<string>(nullable: true),
@@ -251,7 +251,7 @@ namespace ncs2019_team_TBD.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 3, 15, 10, 53, 596, DateTimeKind.Utc)),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 5, 4, 10, 26, 11, 686, DateTimeKind.Utc)),
                     DateUpdated = table.Column<DateTime>(nullable: false),
                     UserCreated = table.Column<string>(nullable: true),
                     UserUpdated = table.Column<string>(nullable: true),

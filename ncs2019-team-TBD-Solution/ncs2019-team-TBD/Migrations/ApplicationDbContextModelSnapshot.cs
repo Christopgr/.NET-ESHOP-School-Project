@@ -141,7 +141,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 3, 15, 10, 53, 635, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 699, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -185,7 +185,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 3, 15, 10, 53, 603, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 688, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -208,7 +208,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 3, 15, 10, 53, 617, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 691, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -231,7 +231,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 3, 15, 10, 53, 626, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 695, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -277,7 +277,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 3, 15, 10, 53, 596, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 686, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
