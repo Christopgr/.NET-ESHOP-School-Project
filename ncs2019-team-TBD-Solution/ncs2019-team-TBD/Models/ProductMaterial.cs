@@ -14,5 +14,7 @@ namespace ncs2019_team_TBD.Models
 		public int ProductId { get; set; }
 
 		public int MaterialId { get; set; }
+		public Material Material { get; set; }
+		public Product Product { get; set; }
 	}
 }

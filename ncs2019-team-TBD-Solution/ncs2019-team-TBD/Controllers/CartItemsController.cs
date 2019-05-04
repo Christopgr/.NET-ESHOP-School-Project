@@ -25,38 +25,30 @@ namespace ncs2019_team_TBD.Controllers
             _userManager = userManager;
         }
 
-		public class ItemProd
-		{
-			public Cart TempCart { get; set; }
-			public List<Product> ProductList = new List<Product>();
+		//public class ItemProd
+		//{
+		//	public Cart TempCart { get; set; }
+		//	public List<Product> ProductList = new List<Product>();
 
-		}
+		//}
 
 		// GET: CartItems
 		public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var c = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(u => u.UserId == userId);
-			
-
-			var l = new ItemProd
-			{
-				TempCart = c
-			};
+			var c = await _context.Carts.Include(x => x.CartItems).ThenInclude(k => k.Product).FirstOrDefaultAsync(u => u.UserId == userId);
 
             decimal finalprice = 0;
 			
             foreach (var item in c.CartItems) {
-				Product p = await _context.Products.FindAsync(item.ProductId);
-				l.ProductList.Add(p);
-                var Price1 = p.Price * item.Quantity;
+                var Price1 = item.Product.Price * item.Quantity;
                 finalprice = finalprice + Price1;
             }
             ViewBag.finalprice = finalprice;
 
             //mporw kai na mhn steilw to Cart
 
-            return View(l);
+            return View(c);
         }
 
         // GET: CartItems/Details/5
