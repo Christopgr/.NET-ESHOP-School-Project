@@ -1,4 +1,4 @@
-﻿@model ncs2019_team_TBD.Models.Product
+﻿@model ncs2019_team_TBD.Controllers.ProductsController.DetailProd
 
 @{
     ViewData["Title"] = "Details";
@@ -11,58 +11,67 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.prod.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.prod.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.InventoryQuantity)
+            @Html.DisplayNameFor(model => model.prod.InventoryQuantity)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.InventoryQuantity)
+            @Html.DisplayFor(model => model.prod.InventoryQuantity)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.SerialNumber)
+            @Html.DisplayNameFor(model => model.prod.SerialNumber)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SerialNumber)
+            @Html.DisplayFor(model => model.prod.SerialNumber)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.prod.Price)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.prod.Price)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.prod.Category)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Category.Id)
+            @Html.DisplayFor(model => model.prod.Category.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Material
+        </dt>
+        @foreach (var item in Model.matlist)
+        {
+            <dd>
+                @Html.DisplayFor(m => item.Material.Name)
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.prod.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.prod.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.prod.DateCreated)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DateCreated)
+            @Html.DisplayFor(model => model.prod.DateCreated)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DateUpdated)
+            @Html.DisplayNameFor(model => model.prod.DateUpdated)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DateUpdated)
+            @Html.DisplayFor(model => model.prod.DateUpdated)
         </dd>
     </dl>
 </div>
 <div>
     
-    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.prod.Id">Delete</a> |
+    <a asp-action="Edit" asp-route-id="@Model.prod.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

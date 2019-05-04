@@ -143,13 +143,19 @@ namespace ncs2019_team_TBD.Controllers
 			return View(await applicationDbContext.ToListAsync());
 		}
 
+        public class DetailProd
+        {
+            public Product prod { get; set; }
+            public List<ProductMaterial> matlist = new List<ProductMaterial>();
+        }
+
 		// GET: Products/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+            if (id == null)
+            {
+                return NotFound();
+            }
 
 			var product = await _context.Products
 				.Include(p => p.Category)
@@ -159,7 +165,16 @@ namespace ncs2019_team_TBD.Controllers
 				return NotFound();
 			}
 
-			return View(product);
+            var dp = new DetailProd { prod = product };
+            
+            var product2 = await _context.Products
+                .Include(p => p.ProductMaterials)
+                .ThenInclude(r=>r.Material)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            dp.matlist = product2.ProductMaterials.ToList();
+            
+            return View(dp);
 		}
 
 		// GET: Products/Create
