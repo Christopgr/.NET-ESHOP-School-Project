@@ -80,7 +80,8 @@
 
 <body>
 
-    <div id="bg"> @*backround*@
+    <div id="bg">
+        @*backround*@
         <img src="~/images/background.jpg" alt="">
     </div>
 
@@ -259,6 +260,31 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)    @{ 
+    <script defer="defer">
+
+    function addToCart(sku, q) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Products/Add',
+            data: JSON.stringify({
+                productId: sku,
+                quantity: q
+            }),
+            contentType: "application/json",
+            dataType: 'json'
+        }).then(function (response) {
+            if (response) {
+                alert("Success");
+            }
+            else {
+                alert("fail");
+            }
+        //    $("#cartItems").html(response);
+        });
+    }
+    </script>
+        }
 </body>
 </html>

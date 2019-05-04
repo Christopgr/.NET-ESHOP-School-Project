@@ -13,14 +13,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ncs2019_team_TBD.Controllers
 {
-    public class MaterialsController : Controller
-    {
-        private readonly ApplicationDbContext _context;
+	public class MaterialsController : Controller
+	{
+		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;
 
 		public MaterialsController(ApplicationDbContext context, UserManager<User> userManager)
-        {
-            _context = context;
+		{
+			_context = context;
 			_userManager = userManager;
 		}
 		//public class MatProd
@@ -31,9 +31,9 @@ namespace ncs2019_team_TBD.Controllers
 		//}
 		// GET: Materials
 		public async Task<IActionResult> Index()
-        {
-            return View(await _context.Materials.ToListAsync());
-        }
+		{
+			return View(await _context.Materials.ToListAsync());
+		}
 
 		public async Task<IActionResult> GetProducts(int? id)
 		{
@@ -42,13 +42,13 @@ namespace ncs2019_team_TBD.Controllers
 				return NotFound();
 			}
 
-			var m = await _context.Materials.Include(p => p.ProductMaterials).ThenInclude(u=>u.Product).FirstOrDefaultAsync(x => x.Id == id);
-			
+			var m = await _context.Materials.Include(p => p.ProductMaterials).ThenInclude(u => u.Product).FirstOrDefaultAsync(x => x.Id == id);
+
 			if (m == null)
 			{
 				return NotFound();
 			}
-			
+
 			//var l = new List<Product>();
 			//foreach (var item in m.ProductMaterials)
 			//{
@@ -104,37 +104,37 @@ namespace ncs2019_team_TBD.Controllers
 
 		// GET: Materials/Details/5
 		public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (material == null)
-            {
-                return NotFound();
-            }
-
-            return View(material);
-        }
-
-        // GET: Materials/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Materials/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
 		{
-            if (ModelState.IsValid)
-            {
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var material = await _context.Materials
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (material == null)
+			{
+				return NotFound();
+			}
+
+			return View(material);
+		}
+
+		// GET: Materials/Create
+		public IActionResult Create()
+		{
+			return View();
+		}
+
+		// POST: Materials/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create([Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+		{
+			if (ModelState.IsValid)
+			{
 				var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 				material.DateCreated = DateTime.UtcNow;
@@ -144,37 +144,37 @@ namespace ncs2019_team_TBD.Controllers
 				material.UserUpdated = userId;
 
 				_context.Add(material);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
 
-
-            return View(material);
-        }
-
-        // GET: Materials/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var material = await _context.Materials.FindAsync(id);
-            if (material == null)
-            {
-                return NotFound();
-            }
 
 			return View(material);
-        }
+		}
 
-        // POST: Materials/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
+		// GET: Materials/Edit/5
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var material = await _context.Materials.FindAsync(id);
+			if (material == null)
+			{
+				return NotFound();
+			}
+
+			return View(material);
+		}
+
+		// POST: Materials/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
 		{
 			if (id != material.Id)
 			{
@@ -184,14 +184,14 @@ namespace ncs2019_team_TBD.Controllers
 			var existing = await _context.Materials.FindAsync(id);
 
 			if (existing == null)
-            {
-                return NotFound();
-            }
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+			if (ModelState.IsValid)
+			{
+				try
+				{
 					var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 					existing.DateUpdated = DateTime.UtcNow;
@@ -201,56 +201,56 @@ namespace ncs2019_team_TBD.Controllers
 					//existing.UserUpdated = material.UserUpdated
 
 					_context.Update(existing);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MaterialExists(existing.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Edit));
-            }
-            return View(existing);
-        }
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!MaterialExists(existing.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Edit));
+			}
+			return View(existing);
+		}
 
-        // GET: Materials/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		// GET: Materials/Delete/5
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (material == null)
-            {
-                return NotFound();
-            }
+			var material = await _context.Materials
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (material == null)
+			{
+				return NotFound();
+			}
 
-            return View(material);
-        }
+			return View(material);
+		}
 
-        // POST: Materials/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var material = await _context.Materials.FindAsync(id);
-            _context.Materials.Remove(material);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+		// POST: Materials/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			var material = await _context.Materials.FindAsync(id);
+			_context.Materials.Remove(material);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 
-        private bool MaterialExists(int id)
-        {
-            return _context.Materials.Any(e => e.Id == id);
-        }
-    }
+		private bool MaterialExists(int id)
+		{
+			return _context.Materials.Any(e => e.Id == id);
+		}
+	}
 }

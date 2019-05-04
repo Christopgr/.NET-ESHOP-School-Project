@@ -141,7 +141,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 699, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 12, 37, 34, 376, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -185,7 +185,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 688, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 12, 37, 34, 362, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -208,7 +208,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 691, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 12, 37, 34, 365, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -231,7 +231,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 695, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 12, 37, 34, 367, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -277,7 +277,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 10, 26, 11, 686, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 12, 37, 34, 374, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -287,7 +287,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<decimal>("Price");
+                    b.Property<float>("Price");
 
                     b.Property<int>("SerialNumber");
 
@@ -436,12 +436,12 @@ namespace ncs2019_team_TBD.Migrations
 
             modelBuilder.Entity("ncs2019_team_TBD.Models.CartItem", b =>
                 {
-                    b.HasOne("ncs2019_team_TBD.Models.Cart")
+                    b.HasOne("ncs2019_team_TBD.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ncs2019_team_TBD.Models.Product")
+                    b.HasOne("ncs2019_team_TBD.Models.Product", "Product")
                         .WithMany("CartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -477,12 +477,12 @@ namespace ncs2019_team_TBD.Migrations
 
             modelBuilder.Entity("ncs2019_team_TBD.Models.ProductMaterial", b =>
                 {
-                    b.HasOne("ncs2019_team_TBD.Models.Material")
+                    b.HasOne("ncs2019_team_TBD.Models.Material", "Material")
                         .WithMany("ProductMaterials")
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ncs2019_team_TBD.Models.Product")
+                    b.HasOne("ncs2019_team_TBD.Models.Product", "Product")
                         .WithMany("ProductMaterials")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -32,7 +32,8 @@
                         <h3> @Html.DisplayFor(modelItem => item.Name) </h3>
                         <p> @Html.DisplayFor(modelItem => item.Description) </p>
                         <p>
-                            <a asp-action="Add" asp-route-productId="@item.Id" asp-route-quantity="1" asp-route-categoryId="@Model.Id" class="btn btn-primary" role="button">Add to Cart</a>
+                          
+                            <button type="button" onclick="addToCart('@item.Id',1)" class="btn btn-default addCartButton"> Add to Cart </button>
                             @*stin akrivos panw grami  ftiaxnes to path gia to "Add to Cart"*@
                             <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
 

@@ -38,25 +38,20 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Products/Add/{productId}&{quantity}
-		//[HttpPost]
-		public async Task<IActionResult> Add(int productId, int quantity)
+		[HttpPost, ActionName("Add")]
+		public async Task<JsonResult> Add([FromBody]addToCartArgs args)
 		{
 			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 			var c = await _context.Carts.Include(x => x.CartItems).ThenInclude(k => k.Product).FirstOrDefaultAsync(u => u.UserId == userId);
 
-			if (c == null)
-			{
-				return NotFound();
-			}
-
-			var p = await _context.Products.FindAsync(productId);
-			var item = c.CartItems.Where(x => x.ProductId == productId).FirstOrDefault();
+			var p = await _context.Products.FindAsync(args.productId);
+			var item = c.CartItems.Where(x => x.ProductId == args.productId).FirstOrDefault();
 			if (p != null)
 			{
 				if (item != null)
 				{
-					item.Quantity += quantity;
+					item.Quantity += args.quantity;
 
 					_context.Update(item);
 
@@ -66,76 +61,77 @@ namespace ncs2019_team_TBD.Controllers
 				{
 					c.CartItems.Add(new CartItem
 					{
-						ProductId = productId,
-						Quantity = quantity
+						ProductId = args.productId,
+						Quantity = args.quantity
 					});
 					await _context.SaveChangesAsync();
 				}
+				return Json(c.CartItems.Count);
 			}
+
+			return Json(0);
+		}
+		/*if (c.CartItems.Any(x => x.ProductId == productId))
+		{
+			foreach (var i in c.CartItems)
+			{
+				if (i.ProductId == productId)
+				{
+					if (p.InventoryQuantity - quantity < 0)
+					{
+						return NotFound();
+					}
+					//else
+					//{
+					//	p.InventoryQuantity -= quantity;
+					//}
+					i.Quantity += quantity;
+				}
+			}
+
+			_context.Update(c);
+			//_context.Update(p);
+
+			await _context.SaveChangesAsync();
 
 			return RedirectToAction(nameof(Index));
 		}
-			/*if (c.CartItems.Any(x => x.ProductId == productId))
+		else
+		{
+
+			//m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
+			//{
+			//	MaterialId = int.Parse(x),
+			//	ProductId = model.Product.Id
+			//}).ToList();
+
+			if (p.InventoryQuantity - quantity < 0)
 			{
-				foreach (var i in c.CartItems)
-				{
-					if (i.ProductId == productId)
-					{
-						if (p.InventoryQuantity - quantity < 0)
-						{
-							return NotFound();
-						}
-						//else
-						//{
-						//	p.InventoryQuantity -= quantity;
-						//}
-						i.Quantity += quantity;
-					}
-				}
+				return NotFound();
+			} 
+			//mono otan ginei to order
+			//else
+			//{
+			//	p.InventoryQuantity -= quantity;
+			//}
 
-				_context.Update(c);
-				//_context.Update(p);
-
-				await _context.SaveChangesAsync();
-
-				return RedirectToAction(nameof(Index));
-			}
-			else
+			var ci = new CartItem
 			{
+				ProductId = productId,
+				CartId = c.Id,
+				Quantity = quantity
+			};
 
-				//m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
-				//{
-				//	MaterialId = int.Parse(x),
-				//	ProductId = model.Product.Id
-				//}).ToList();
+			c.CartItems.Add(ci);
 
-				if (p.InventoryQuantity - quantity < 0)
-				{
-					return NotFound();
-				} 
-				//mono otan ginei to order
-				//else
-				//{
-				//	p.InventoryQuantity -= quantity;
-				//}
+			_context.Update(c);
+			//_context.Update(p);
 
-				var ci = new CartItem
-				{
-					ProductId = productId,
-					CartId = c.Id,
-					Quantity = quantity
-				};
+			await _context.SaveChangesAsync();
 
-				c.CartItems.Add(ci);
 
-				_context.Update(c);
-				//_context.Update(p);
+		}*/
 
-				await _context.SaveChangesAsync();
-
-				
-			}*/
-		
 
 		// GET: Products
 		public async Task<IActionResult> Index()
@@ -144,19 +140,19 @@ namespace ncs2019_team_TBD.Controllers
 			return View(await applicationDbContext.ToListAsync());
 		}
 
-        public class DetailProd
-        {
-            public Product prod { get; set; }
-            public List<ProductMaterial> matlist = new List<ProductMaterial>();
-        }
+		public class DetailProd
+		{
+			public Product prod { get; set; }
+			public List<ProductMaterial> matlist = new List<ProductMaterial>();
+		}
 
 		// GET: Products/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{
-            if (id == null)
-            {
-                return NotFound();
-            }
+			if (id == null)
+			{
+				return NotFound();
+			}
 
 			var product = await _context.Products
 				.Include(p => p.Category)
@@ -166,16 +162,16 @@ namespace ncs2019_team_TBD.Controllers
 				return NotFound();
 			}
 
-            var dp = new DetailProd { prod = product };
-            
-            var product2 = await _context.Products
-                .Include(p => p.ProductMaterials)
-                .ThenInclude(r=>r.Material)
-                .FirstOrDefaultAsync(m => m.Id == id);
+			var dp = new DetailProd { prod = product };
 
-            dp.matlist = product2.ProductMaterials.ToList();
-            
-            return View(dp);
+			var product2 = await _context.Products
+				.Include(p => p.ProductMaterials)
+				.ThenInclude(r => r.Material)
+				.FirstOrDefaultAsync(m => m.Id == id);
+
+			dp.matlist = product2.ProductMaterials.ToList();
+
+			return View(dp);
 		}
 
 		// GET: Products/Create
@@ -355,5 +351,11 @@ namespace ncs2019_team_TBD.Controllers
 		{
 			return _context.Products.Any(e => e.Id == id);
 		}
+	}
+
+	public class addToCartArgs
+	{
+		public int productId { get; set; }
+		public int quantity { get; set; }
 	}
 }

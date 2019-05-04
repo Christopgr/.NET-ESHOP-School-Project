@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ncs2019_team_TBD.Models
 {
+	
     public class Product : BaseModel
     {
 
@@ -16,7 +18,9 @@ namespace ncs2019_team_TBD.Models
     
         public int SerialNumber { get; set; }
 
-        public decimal Price { get; set; }
+
+		[DataType(DataType.Currency)]
+		public float Price { get; set; }
 
 		/// <summary>
 		/// only 1 Category
