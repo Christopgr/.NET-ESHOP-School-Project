@@ -84,6 +84,15 @@ namespace ncs2019_team_TBD.Data
 				entity.ToTable("OrderItems");
 				//declare primary key with 2 foreign keys
 				entity.HasKey(x => new { x.ProductId, x.OrderId });
+				entity.HasOne(x => x.Product)
+				.WithMany(p => p.OrderItems)
+				.HasForeignKey(x => x.ProductId)
+				.HasPrincipalKey(p => p.Id);
+
+				entity.HasOne(x => x.Order)
+				.WithMany(c => c.OrderItems)
+				.HasForeignKey(a => a.OrderId)
+				.HasPrincipalKey(b => b.Id);
 			});
 			builder.Entity<Product>(entity =>
 			{

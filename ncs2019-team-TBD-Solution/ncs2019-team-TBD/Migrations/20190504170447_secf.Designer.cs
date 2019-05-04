@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ncs2019_team_TBD.Data;
 
 namespace ncs2019_team_TBD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190504170447_secf")]
+    partial class secf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +143,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 18, 14, 45, 248, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 17, 4, 46, 896, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -185,7 +187,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 18, 14, 45, 228, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 17, 4, 46, 882, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -208,7 +210,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 18, 14, 45, 231, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 17, 4, 46, 885, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -229,23 +231,13 @@ namespace ncs2019_team_TBD.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address");
-
-                    b.Property<string>("City");
-
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 18, 14, 45, 235, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 17, 4, 46, 887, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
-                    b.Property<string>("FullName");
-
                     b.Property<string>("Name");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<string>("SI");
 
                     b.Property<string>("State");
 
@@ -254,8 +246,6 @@ namespace ncs2019_team_TBD.Migrations
                     b.Property<string>("UserId");
 
                     b.Property<string>("UserUpdated");
-
-                    b.Property<string>("ZIP");
 
                     b.HasKey("Id");
 
@@ -289,7 +279,7 @@ namespace ncs2019_team_TBD.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 4, 18, 14, 45, 246, DateTimeKind.Utc));
+                        .HasDefaultValue(new DateTime(2019, 5, 4, 17, 4, 46, 894, DateTimeKind.Utc));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -470,12 +460,12 @@ namespace ncs2019_team_TBD.Migrations
 
             modelBuilder.Entity("ncs2019_team_TBD.Models.OrderItem", b =>
                 {
-                    b.HasOne("ncs2019_team_TBD.Models.Order", "Order")
+                    b.HasOne("ncs2019_team_TBD.Models.Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ncs2019_team_TBD.Models.Product", "Product")
+                    b.HasOne("ncs2019_team_TBD.Models.Product")
                         .WithMany("OrderItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);

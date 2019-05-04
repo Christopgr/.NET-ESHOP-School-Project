@@ -10,7 +10,18 @@ namespace ncs2019_team_TBD.Models
 
 		public string UserId { get; set; }
 
+		public string FullName { get; set; }
 		public string State { get; set; }
+
+		public string Address { get; set; }
+
+		public string City { get; set; }
+
+		public string ZIP { get; set; }
+
+		public string PhoneNumber { get; set; }
+
+		public string SI { get; set; }  //Special Instructions for the delivery of goods
 
 		/// <summary>
 		/// declares that an order can have only 1 user
