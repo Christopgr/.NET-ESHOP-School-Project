@@ -1,4 +1,4 @@
-﻿@model ncs2019_team_TBD.Controllers.CartItemsController.ItemProd
+﻿@model ncs2019_team_TBD.Models.Cart
 
 @{
     ViewData["Title"] = "Index";
@@ -29,20 +29,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.TempCart.CartItems)
+        @foreach (var item in Model.CartItems)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Name)
+                    @Html.DisplayFor(modelItem => item.Product.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Description)
+                    @Html.DisplayFor(modelItem => item.Product.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Price)
+                    @Html.DisplayFor(modelItem => item.Product.Price)
                 </td>
                 <td>
                     <a asp-action="Edit" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Edit Quantity</a>
