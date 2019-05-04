@@ -8,7 +8,21 @@
 
 
 
-
+<style>
+    .table {
+        /*border-bottom: 2px solid #1d0958;*/
+        border-collapse: inherit;
+        border-spacing: 0;
+        border-collapse: unset;
+    }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: middle;
+        border-top: 2px solid #1d0958;
+    }
+    
+</style>
 
 
 
@@ -19,63 +33,58 @@
     <thead>
         <tr>
             <th>
-                Product
+                
             </th>
             <th>
-                Description
+                <h4><strong> Product</strong></h4>
             </th>
             <th>
-                Quantity
+                <h4><strong> Description</strong></h4>
             </th>
             <th>
-                Price
+                <h4><strong>Quantity</strong></h4>
             </th>
-
-            <th></th>
+            <th>
+                <h4><strong>Price</strong></h4>
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.TempCart.CartItems)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Price)
-                </td>
-                <td>
-                    <a asp-action="Edit" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Edit Quantity</a>
-                    <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Details</a>
-                    <a asp-action="Delete" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Delete</a>
+      @foreach (var item in Model.TempCart.CartItems)
+       {
+        <tr>
+            <td>
+                <img src="~/images/1.jpg" alt="Products" class="img-responsive" width="65" height="65" />
+            <td>
+                <h5><strong> @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Name)</strong></h5>
+            </td>
+            <td>
+                <h5><strong> @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Description)</strong></h5>
+            </td>
+            <td>
+                <h5><strong> @Html.DisplayFor(modelItem => item.Quantity)</strong></h5>
+            </td>
+            <td>
+                <h5><strong> @Html.DisplayFor(modelItem => Model.ProductList.Find(p => p.Id == item.ProductId).Price) </strong></h5>
+            </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Edit Quantity</a>
+                @*<a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Details</a>*@
+                <a asp-action="Delete" class="btn btn-primary" role="button" asp-route-id="@item.ProductId">Delete</a>
 
-                </td>
-            </tr>
-            <tr></tr>
-            <!--
-
-            -->
+            </td>
+        </tr>
+            
         }
     </tbody>
     <tr>
-        <th>Total Cost: </th>
+        <th><h4><strong>Total Cost: </strong></h4></th>
         <th></th>
         <th></th>
-        <th>@ViewBag.finalprice</th>
+        <th></th>
         <th>
+            <h4><strong><u>@ViewBag.finalprice</u><span class="glyphicon glyphicon-euro" aria-hidden="true"></span></strong></h4>
         </th>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><a asp-action="Views/Checkout" class="btn btn-primary" role="button">Proceed to Checkout</a></td>
+        <td><a asp-action="Views/Checkout" class="btn btn-primary btn-group-lg" role="button">Proceed to Checkout</a></td>
     </tr>
 </table>
