@@ -32,9 +32,9 @@
                         <h3> @Html.DisplayFor(modelItem => item.Name) </h3>
                         <p> @Html.DisplayFor(modelItem => item.Description) </p>
                         <p>
-                            <a href="#" class="btn btn-primary" role="button">Add to Cart</a>
+                            <a asp-controller="Products" asp-action="Add" asp-route-productId="@item.Id" asp-route-quantity="1" class="btn btn-primary" role="button">Add to Cart</a>
                             @*stin akrivos panw grami  ftiaxnes to path gia to "Add to Cart"*@
-                            <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
+                            <a asp-controller="Products" asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
 
                             <u><strong> @Html.DisplayFor(modelItem => item.Price) </strong></u>
                             <span class="glyphicon glyphicon-eur" aria-hidden="true"></span>
