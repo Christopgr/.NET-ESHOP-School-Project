@@ -1,9 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-ncs2019_team_TBD-6FC6A97B-66D2-4280-B726-DDA2A4E52FF2</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190412053720_initial.cs" />
+    <Compile Remove="Migrations\20190412053720_initial.Designer.cs" />
+    <Compile Remove="Migrations\20190415055429_sec.cs" />
+    <Compile Remove="Migrations\20190415055429_sec.Designer.cs" />
+    <Compile Remove="Migrations\20190415065538_tr.cs" />
+    <Compile Remove="Migrations\20190415065538_tr.Designer.cs" />
+    <Compile Remove="Migrations\20190418155422_firstMM.cs" />
+    <Compile Remove="Migrations\20190418155422_firstMM.Designer.cs" />
+    <Compile Remove="Migrations\20190429080223_Users.cs" />
+    <Compile Remove="Migrations\20190429080223_Users.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -12,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 

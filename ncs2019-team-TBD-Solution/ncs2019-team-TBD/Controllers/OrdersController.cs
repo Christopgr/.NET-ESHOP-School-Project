@@ -63,8 +63,8 @@ namespace ncs2019_team_TBD.Controllers
             {
                 order.DateCreated = DateTime.UtcNow;
                 order.DateUpdated = DateTime.UtcNow;
-                order.UserCreated = Guid.NewGuid();
-                order.UserUpdated = Guid.NewGuid();
+                //order.UserCreated = Guid.NewGuid();
+                //order.UserUpdated = Guid.NewGuid();
 
                 _context.Add(order);
                 await _context.SaveChangesAsync();
@@ -96,7 +96,7 @@ namespace ncs2019_team_TBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Quantity,State,Id,Name,DateCreated,DateUpdated,UserCreated,UserUpdated")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Quantity,State,Id,Name")] Order order)
         {
             if (id != order.Id)
             {
@@ -114,8 +114,9 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
-                    _context.Update(order);
-                    order.DateUpdated = DateTime.UtcNow;
+					existing.DateUpdated = DateTime.UtcNow;
+
+					_context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

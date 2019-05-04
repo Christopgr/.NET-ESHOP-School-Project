@@ -8,17 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using ncs2019_team_TBD.Data;
 using ncs2019_team_TBD.Models;
 using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace ncs2019_team_TBD.Controllers
 {
     public class MaterialsController : Controller
     {
         private readonly ApplicationDbContext _context;
+		private readonly UserManager<User> _userManager;
 
-        public MaterialsController(ApplicationDbContext context)
+		public MaterialsController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-        }
+			_userManager = userManager;
+		}
 
         // GET: Materials
         public async Task<IActionResult> Index()
@@ -59,12 +63,13 @@ namespace ncs2019_team_TBD.Controllers
 		{
             if (ModelState.IsValid)
             {
+				var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 				material.DateCreated = DateTime.UtcNow;
 				material.DateUpdated = DateTime.UtcNow;
 
-				//material.UserCreated
-				//material.UserUpdated
+				material.UserCreated = userId;
+				material.UserUpdated = userId;
 
 				_context.Add(material);
                 await _context.SaveChangesAsync();
@@ -115,13 +120,15 @@ namespace ncs2019_team_TBD.Controllers
             {
                 try
                 {
+					var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 					existing.DateUpdated = DateTime.UtcNow;
 					existing.Name = material.Name;
-					
+					existing.UserUpdated = userId;
 					//oti den exei parei apo to Bind
 					//existing.UserUpdated = material.UserUpdated
 
-                    _context.Update(existing);
+					_context.Update(existing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

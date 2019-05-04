@@ -1,9 +1,62 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ncs2019_team_TBD</title>
+    <title>@ViewData["Title"] - WHAKAKAI</title>
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+        #bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+        }
+
+            #bg img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                min-width: 50%;
+                min-height: 50%;
+            }
+    
+        .topnav #myLinks {
+            display: none;
+        }
+
+        .topnav a {
+            float: left;
+            color: black;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+            .topnav a.icon {
+                float: left;
+            }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+        .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+
+
+
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -16,43 +69,155 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
+
+
 <body>
+
+    <div id="bg">
+        <img src="~/images/background.jpg" alt="">
+    </div>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                @*ti kanei to parakatw??? icon-bar???  an vgei ola gamiounte *@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ncs2019_team_TBD</a>
+
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"> <img border="0" alt="WHAKAKAI" src="~/images/logo.jpg" width="80" height="45"></a>
+
+
+
+                <!-- Top Navigation Menu -  mas xalaei na layout -->
+                <div class="topnav">
+
+                    <div id="myLinks">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                        <a asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        <a asp-area="" asp-controller="Materials" asp-action="Index">Materials</a>
+                    </div>
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+
+
             </div>
+
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a></li>
-                    <li><a asp-area="" asp-controller="Materials" asp-action="Index">Materials</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
-                </ul>
                 <partial name="_LoginPartial" />
             </div>
+
         </div>
     </nav>
 
     <partial name="_CookieConsentPartial" />
 
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
+
+    <style>
+        .navbar-inverse {
+            background-color: #9bc2ea;
+        }
+
+        .navbar-fixed-top {
+            top: 0;
+            border-width: 0 0 0px;
+        }
+
+        .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+            margin-left: -90px;
+            color: #080000;
+        }
+
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #080000;
+        }
+
+
+        .col-container {
+            display: table;
+            width: 90%;
+        }
+
+        .col {
+            display: table-cell;
+            padding: 6px;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #9bc2ea;
+            color: black;
+            text-align: left;
+        }
+
+        .footer-fixed-bottom {
+            bottom: 0;
+            border-width: 0 0 0px;
+        }
+
+        #footer-content {
+            color: #080000;
+            text-align: left;
+        }
+
+        a:hover, a:focus {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: none;
+        }
+    </style>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2019 - ncs2019_team_TBD</p>
+
+        <footer class="footer">
+
+            <div class="col-container">
+                <div class="col" style="background:none">
+                    <strong> <p>&copy; April 2019 - Whakakai Handmade Jewellery - eShop Project Coding School</p> </strong>
+                </div>
+
+                <div id="footer-content">
+                    <div class="col" style="background:none">
+                        <a asp-area="" asp-controller="Home" asp-action="About"><h4>About US </h4></a>
+                    </div>
+                    <div class="col" style="background:none">
+                        <a asp-area="" asp-controller="Home" asp-action="Contact"><h4>Contact Us</h4></a>
+                    </div>
+                </div>
+
+            </div>
         </footer>
     </div>
 
     <environment include="Development">
+        @*den leitourgei to carousel*@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

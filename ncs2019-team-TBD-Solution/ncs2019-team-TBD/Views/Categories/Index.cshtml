@@ -4,12 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Category</a>
 </p>
-<table class="table">
+
+
+<div class="row">
+
+    @* apo i=10 mexri i=13 ka8ws  exoume 4 ktigories standard *@
+    @{
+        int i = 10;
+
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@Url.Content(string.Format("~/images/"+i+".jpg", i++))" alt="  @Html.DisplayFor(modelItem => item.Name) " width="300" height="300">
+                    <div class="caption">
+                        <h3> @Html.DisplayFor(modelItem => item.Name) </h3>
+                         <p>
+                            <a asp-action="GetProducts" asp-route-id="@item.Id" class="btn btn-primary" role="button">View Products</a>
+                            @*<a asp-area="" class="btn btn-primary" role="button" asp-controller="Products" asp-action="Index">View Products</a>*@
+                            @* to panw, na dixnei ta proionta tis ekastote katigorias, kai oxi ola ta proionta *@
+                            <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -30,9 +59,13 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
+    <tbody>*@
+
+
+
+@*@foreach (var item in Model)
+    {
+        <tr class="Cat_View_Tr">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -49,11 +82,11 @@
                 @Html.DisplayFor(modelItem => item.UserUpdated)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+@*</td>
         </tr>
-}
-    </tbody>
-</table>
+    }*@
+@*</tbody>
+    </table>*@
