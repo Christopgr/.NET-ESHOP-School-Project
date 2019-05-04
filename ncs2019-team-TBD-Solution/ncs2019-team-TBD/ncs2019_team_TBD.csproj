@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Materials\GetProducts.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_Layout_Eshop.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
