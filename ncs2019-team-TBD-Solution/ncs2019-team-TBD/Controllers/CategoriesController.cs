@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -95,7 +96,7 @@ namespace ncs2019_team_TBD.Controllers
 			}
 			return View(category);
 		}
-
+		[Authorize(Roles = "Administrator")]
 		// GET: Categories/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
@@ -159,7 +160,7 @@ namespace ncs2019_team_TBD.Controllers
 			}
 			return View(existing);
 		}
-
+		[Authorize(Roles = "Administrator")]
 		// GET: Categories/Delete/5
 		public async Task<IActionResult> Delete(int? id)
 		{

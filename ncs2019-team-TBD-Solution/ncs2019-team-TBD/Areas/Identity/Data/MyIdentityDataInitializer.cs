@@ -21,7 +21,7 @@ namespace ncs2019_team_TBD.Areas.Identity.Data
             if (userManager.FindByNameAsync("Whakakai").Result == null)
             {
                 User user = new User();
-                user.UserName = "Whakakai";
+                user.UserName = "whakakai@whakakai.com";
                 user.Email = "whakakai@whakakai.com";
                 user.PhoneNumber = " ";
                 user.Address = " ";
