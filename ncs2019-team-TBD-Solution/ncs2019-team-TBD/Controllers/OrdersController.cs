@@ -44,7 +44,7 @@ namespace ncs2019_team_TBD.Controllers
 				neworder.UserCreated = userId;
 				neworder.UserUpdated = userId;
 				neworder.OrderItems = new List<OrderItem>();
-				
+
 				foreach (var item in c.CartItems)
 				{
 					neworder.OrderItems.Add(new OrderItem
@@ -70,8 +70,19 @@ namespace ncs2019_team_TBD.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var applicationDbContext = _context.Orders.Include(o => o.User.Id == userId);
-			return View(await applicationDbContext.ToListAsync());
+			var applicationDbContext = _context.Orders.Include(o => o.User);
+
+			var l = await applicationDbContext.ToListAsync();
+			var r = new List<Order>();
+
+			foreach (var item in l)
+			{
+				if (item.User.Id == userId)
+				{
+					r.Add(item);
+				}
+			}
+			return View(r);
 		}
 
 		// GET: Orders/Details/5
