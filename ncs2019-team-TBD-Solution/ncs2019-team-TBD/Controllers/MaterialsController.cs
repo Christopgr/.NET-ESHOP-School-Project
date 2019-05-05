@@ -67,7 +67,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Materials/Create
-		[Authorize(Roles = "Administrator")]
+		 
 		public IActionResult Create()
 		{
 			return View();
@@ -78,7 +78,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Create([Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
 		{
 			if (ModelState.IsValid)
@@ -101,7 +101,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Materials/Edit/5
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -123,7 +123,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Material material) //,DateCreated,DateUpdated,UserCreated,UserUpdated
 		{
 			if (id != material.Id)
@@ -168,7 +168,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Materials/Delete/5
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -189,7 +189,7 @@ namespace ncs2019_team_TBD.Controllers
 		// POST: Materials/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var material = await _context.Materials.FindAsync(id);

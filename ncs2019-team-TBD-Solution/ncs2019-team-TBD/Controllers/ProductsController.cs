@@ -121,7 +121,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Products/Create
-		[Authorize(Roles = "Administrator")]
+		 
 		public IActionResult Create()
 		{
 			ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
@@ -141,7 +141,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Create(Modelo model)
 		{
 			if (ModelState.IsValid)
@@ -206,7 +206,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Products/Edit/5
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -241,7 +241,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Edit(int id, Modelo model)
 		{
 			if (id != model.Product.Id)
@@ -303,7 +303,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Products/Delete/5
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -325,7 +325,7 @@ namespace ncs2019_team_TBD.Controllers
 		// POST: Products/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var product = await _context.Products.FindAsync(id);

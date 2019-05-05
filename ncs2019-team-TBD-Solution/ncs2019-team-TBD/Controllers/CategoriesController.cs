@@ -69,7 +69,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: Categories/Create
-		[Authorize(Roles = "Administrator")]
+		 
 		public IActionResult Create()
 		{
 			return View();
@@ -80,7 +80,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
 		{
 			if (ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace ncs2019_team_TBD.Controllers
 			}
 			return View(category);
 		}
-		[Authorize(Roles = "Administrator")]
+		 
 		// GET: Categories/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
@@ -121,7 +121,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
 		{
 			if (id != category.Id)
@@ -163,7 +163,7 @@ namespace ncs2019_team_TBD.Controllers
 			}
 			return View(existing);
 		}
-		[Authorize(Roles = "Administrator")]
+		 
 		// GET: Categories/Delete/5
 		public async Task<IActionResult> Delete(int? id)
 		{
@@ -185,7 +185,7 @@ namespace ncs2019_team_TBD.Controllers
 		// POST: Categories/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Administrator")]
+		 
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var category = await _context.Categories.FindAsync(id);
