@@ -60,7 +60,7 @@ namespace ncs2019_team_TBD.Controllers
 
 				await _context.SaveChangesAsync();
 
-				return View();
+				return RedirectToAction(nameof(Index));
 
 			}
 			return View();
