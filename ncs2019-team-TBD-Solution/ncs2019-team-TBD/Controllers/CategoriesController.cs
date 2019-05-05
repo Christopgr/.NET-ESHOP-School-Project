@@ -47,45 +47,8 @@ namespace ncs2019_team_TBD.Controllers
 			}
 
 			return View(c);
-			//ViewData["View Products"]=c;
 		}
-
-		public async Task<IActionResult> Add(int productId, int quantity, int categoryId)
-		{
-			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-			var c = await _context.Carts.Include(x => x.CartItems).ThenInclude(k => k.Product).FirstOrDefaultAsync(u => u.UserId == userId);
-
-			if (c == null)
-			{
-				return NotFound();
-			}
-
-			var p = await _context.Products.FindAsync(productId);
-			var item = c.CartItems.Where(x => x.ProductId == productId).FirstOrDefault();
-			if (p != null)
-			{
-				if (item != null)
-				{
-					item.Quantity += quantity;
-
-					_context.Update(item);
-
-					await _context.SaveChangesAsync();
-				}
-				else
-				{
-					c.CartItems.Add(new CartItem
-					{
-						ProductId = productId,
-						Quantity = quantity
-					});
-					await _context.SaveChangesAsync();
-				}
-			}
-			return RedirectToAction(nameof(GetProducts), new { id = categoryId });
-		}
-
+		
 		// GET: Categories/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{

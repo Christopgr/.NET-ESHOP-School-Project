@@ -23,12 +23,7 @@ namespace ncs2019_team_TBD.Controllers
 			_context = context;
 			_userManager = userManager;
 		}
-		//public class MatProd
-		//{
-		//	public Material Mat { get; set; }
-		//	public List<Product> ProductList = new List<Product>();
 
-		//}
 		// GET: Materials
 		public async Task<IActionResult> Index()
 		{
@@ -49,57 +44,7 @@ namespace ncs2019_team_TBD.Controllers
 				return NotFound();
 			}
 
-			//var l = new List<Product>();
-			//foreach (var item in m.ProductMaterials)
-			//{
-			//	var p = await _context.Products.FindAsync(item.ProductId);
-			//	l.Add(p);
-			//}
-
-			//var mp = new MatProd
-			//{
-			//	Mat = m,
-			//	ProductList = l
-			//};
-
 			return View(m);
-			//ViewData["View Products"]=c;
-		}
-
-		public async Task<IActionResult> Add(int productId, int quantity, int materialId)
-		{
-			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-			var c = await _context.Carts.Include(x => x.CartItems).ThenInclude(k => k.Product).FirstOrDefaultAsync(u => u.UserId == userId);
-
-			if (c == null)
-			{
-				return NotFound();
-			}
-
-			var p = await _context.Products.FindAsync(productId);
-			var item = c.CartItems.Where(x => x.ProductId == productId).FirstOrDefault();
-			if (p != null)
-			{
-				if (item != null)
-				{
-					item.Quantity += quantity;
-
-					_context.Update(item);
-
-					await _context.SaveChangesAsync();
-				}
-				else
-				{
-					c.CartItems.Add(new CartItem
-					{
-						ProductId = productId,
-						Quantity = quantity
-					});
-					await _context.SaveChangesAsync();
-				}
-			}
-			return RedirectToAction(nameof(GetProducts), new { id = materialId });
 		}
 
 		// GET: Materials/Details/5
@@ -197,8 +142,6 @@ namespace ncs2019_team_TBD.Controllers
 					existing.DateUpdated = DateTime.UtcNow;
 					existing.Name = material.Name;
 					existing.UserUpdated = userId;
-					//oti den exei parei apo to Bind
-					//existing.UserUpdated = material.UserUpdated
 
 					_context.Update(existing);
 					await _context.SaveChangesAsync();

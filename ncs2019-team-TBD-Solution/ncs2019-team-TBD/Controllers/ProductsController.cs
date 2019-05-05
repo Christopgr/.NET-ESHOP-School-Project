@@ -43,7 +43,7 @@ namespace ncs2019_team_TBD.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-		// GET: Products/Add/{productId}&{quantity}
+		// POST: Products/Add/{productId}&{quantity}
 		[HttpPost, ActionName("Add")]
 		public async Task<JsonResult> Add([FromBody]addToCartArgs args)
 		{
@@ -77,67 +77,6 @@ namespace ncs2019_team_TBD.Controllers
 
 			return Json(0);
 		}
-		/*if (c.CartItems.Any(x => x.ProductId == productId))
-		{
-			foreach (var i in c.CartItems)
-			{
-				if (i.ProductId == productId)
-				{
-					if (p.InventoryQuantity - quantity < 0)
-					{
-						return NotFound();
-					}
-					//else
-					//{
-					//	p.InventoryQuantity -= quantity;
-					//}
-					i.Quantity += quantity;
-				}
-			}
-
-			_context.Update(c);
-			//_context.Update(p);
-
-			await _context.SaveChangesAsync();
-
-			return RedirectToAction(nameof(Index));
-		}
-		else
-		{
-
-			//m.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial
-			//{
-			//	MaterialId = int.Parse(x),
-			//	ProductId = model.Product.Id
-			//}).ToList();
-
-			if (p.InventoryQuantity - quantity < 0)
-			{
-				return NotFound();
-			} 
-			//mono otan ginei to order
-			//else
-			//{
-			//	p.InventoryQuantity -= quantity;
-			//}
-
-			var ci = new CartItem
-			{
-				ProductId = productId,
-				CartId = c.Id,
-				Quantity = quantity
-			};
-
-			c.CartItems.Add(ci);
-
-			_context.Update(c);
-			//_context.Update(p);
-
-			await _context.SaveChangesAsync();
-
-
-		}*/
-
 
 		// GET: Products
 		public async Task<IActionResult> Index()
@@ -210,10 +149,7 @@ namespace ncs2019_team_TBD.Controllers
 				model.Product.DateUpdated = DateTime.UtcNow;
 				model.Product.UserCreated = userId;
 				model.Product.UserUpdated = userId;
-
-                
-
-
+				
                 //ousiastika enwnoume to model.Product.ProductMaterials me to model.SelectedMaterials
                 //kai to sprwxnoumes sthn vash kai dhmiourgei mono tou tis eggrafes ston pinaka ProductMaterials
                 model.Product.ProductMaterials = model.SelectedMaterials.Select(x => new ProductMaterial

@@ -25,13 +25,6 @@ namespace ncs2019_team_TBD.Controllers
 			_userManager = userManager;
 		}
 
-		//public class ItemProd
-		//{
-		//	public Cart TempCart { get; set; }
-		//	public List<Product> ProductList = new List<Product>();
-
-		//}
-
 		// GET: CartItems
 		public async Task<IActionResult> Index()
 		{
@@ -46,8 +39,6 @@ namespace ncs2019_team_TBD.Controllers
 				finalprice = finalprice + Price1;
 			}
 			ViewBag.finalprice = finalprice;
-
-			//mporw kai na mhn steilw to Cart
 
 			return View(c);
 		}
