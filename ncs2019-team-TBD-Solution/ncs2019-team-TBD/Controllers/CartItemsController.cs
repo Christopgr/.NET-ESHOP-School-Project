@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -62,6 +63,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: CartItems/Create
+		[Authorize(Roles = "Administrator")]
 		public IActionResult Create()
 		{
 			return View();
@@ -72,6 +74,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Create([Bind("CartId,ProductId,Quantity")] CartItem cartItem)
 		{
 			if (ModelState.IsValid)
@@ -84,6 +87,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: CartItems/Edit/5
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Edit(CartItem cartitem)
 		{
 
@@ -101,6 +105,7 @@ namespace ncs2019_team_TBD.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Edit(int id, CartItem cartitem)
 		{
 
@@ -131,6 +136,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// GET: CartItems/Delete/5
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -151,6 +157,7 @@ namespace ncs2019_team_TBD.Controllers
 		// POST: CartItems/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> DeleteConfirmed(int? id)
 		{
 			var cartItem = await _context.CartItems

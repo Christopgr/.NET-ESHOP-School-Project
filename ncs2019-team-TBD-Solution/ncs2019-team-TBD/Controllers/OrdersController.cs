@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -196,6 +197,7 @@ namespace ncs2019_team_TBD.Controllers
 		//}
 
 		// GET: Orders/Delete/5
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -215,6 +217,7 @@ namespace ncs2019_team_TBD.Controllers
 		}
 
 		// POST: Orders/Delete/5
+		[Authorize(Roles = "Administrator")]
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
