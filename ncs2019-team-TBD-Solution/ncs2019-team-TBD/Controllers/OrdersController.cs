@@ -69,7 +69,8 @@ namespace ncs2019_team_TBD.Controllers
 		// GET: Orders
 		public async Task<IActionResult> Index()
 		{
-			var applicationDbContext = _context.Orders.Include(o => o.User);
+			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var applicationDbContext = _context.Orders.Include(o => o.User.Id == userId);
 			return View(await applicationDbContext.ToListAsync());
 		}
 

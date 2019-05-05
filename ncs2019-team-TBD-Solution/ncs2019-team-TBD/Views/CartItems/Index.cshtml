@@ -53,7 +53,7 @@
         {
             <tr>
                 <td>
-                    <img src="~/images/1.jpg" alt="Products" class="img-responsive" width="65" height="65" />
+                    <img src="@Html.DisplayFor(modelItem => item.Product.Img)" alt="Products" class="img-responsive" width="65" height="65" />
                 <td>
                     <h5><strong> @Html.DisplayFor(modelItem => item.Product.Name)</strong></h5>
                 </td>

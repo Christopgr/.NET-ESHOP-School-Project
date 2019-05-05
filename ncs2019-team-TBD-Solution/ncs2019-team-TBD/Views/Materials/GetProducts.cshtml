@@ -27,7 +27,7 @@
         {
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
-                    <img src="@Url.Content(string.Format("~/images/"+i+".jpg", i++))" alt=" @Html.DisplayFor(modelItem => item.ProductId) " width="242" height="200">
+                    <img src="@Html.DisplayFor(modelItem => item.Product.Img)" style="border-radius:5px; border:1px solid #bbb9b9;width:100% !important;" />
                     <div class="caption">
                         <h3> @Html.DisplayFor(modelItem => item.Product.Name) </h3>
                         <p> @Html.DisplayFor(modelItem => item.Product.Description) </p>

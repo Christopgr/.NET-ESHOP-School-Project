@@ -27,12 +27,12 @@
         {
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
-                    <img src="@Url.Content(string.Format("~/images/"+i+".jpg", i++))" alt=" @Html.DisplayFor(modelItem => item.CategoryId) " width="242" height="200">
+                    <img src="@Html.DisplayFor(modelItem => item.Img)" style="border-radius:5px; border:1px solid #bbb9b9;width:100% !important;" />
                     <div class="caption">
                         <h3> @Html.DisplayFor(modelItem => item.Name) </h3>
                         <p> @Html.DisplayFor(modelItem => item.Description) </p>
                         <p>
-                          
+
                             <button type="button" onclick="addToCart('@item.Id',1)" class="btn btn-default addCartButton"> Add to Cart </button>
                             @*stin akrivos panw grami  ftiaxnes to path gia to "Add to Cart"*@
                             <a asp-action="Details" class="btn btn-primary" role="button" asp-route-id="@item.Id">Details</a>
